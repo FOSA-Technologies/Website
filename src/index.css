@@ -1,0 +1,142 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* Orange FOSA */
+  --color-fosa-50: #fff5ed;
+  --color-fosa-100: #ffe7d3;
+  --color-fosa-200: #ffd0a8;
+  --color-fosa-300: #ff9d5c;
+  --color-fosa-400: #ff6a1f; /* orange clair, texte sur fond navy */
+  --color-fosa-500: #ff5a00; /* orange principal */
+  --color-fosa-600: #e84e00; /* hover + grands textes sur fond clair */
+  --color-fosa-700: #c94300; /* texte orange accessible sur fond clair */
+  --color-fosa-800: #a33600;
+
+  /* Navy FOSA */
+  --color-navy-700: #1b2a42;
+  --color-navy-800: #162033;
+  --color-navy-900: #0b1424;
+
+  /* Neutres */
+  --color-surface: #f6f7f9;
+  --color-ink: #4b5563;
+  --color-line: #e6e9ef;
+
+  --shadow-card: 0 1px 2px rgb(11 20 36 / 0.04), 0 8px 24px -12px rgb(11 20 36 / 0.12);
+  --shadow-soft: 0 1px 1px rgb(11 20 36 / 0.03), 0 16px 40px -20px rgb(11 20 36 / 0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply bg-white font-sans text-navy-900 antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--color-fosa-500);
+  color: #fff;
+}
+
+/* Lien d'évitement pour l'accessibilité clavier */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  z-index: 100;
+  border-radius: 8px;
+  background: var(--color-navy-900);
+  color: #fff;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 16px;
+  outline: 2px solid var(--color-fosa-500);
+  outline-offset: 2px;
+}
+
+/* ————— Signature FOSA : coins coupés (polygones) ————— */
+@layer utilities {
+  .cut-corner {
+    clip-path: polygon(
+      0 0,
+      calc(100% - clamp(18px, 3vw, 30px)) 0,
+      100% clamp(18px, 3vw, 30px),
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .cut-corner-sm {
+    clip-path: polygon(
+      0 0,
+      calc(100% - clamp(12px, 2vw, 18px)) 0,
+      100% clamp(12px, 2vw, 18px),
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .cut-corner-br {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - clamp(18px, 3vw, 30px)),
+      calc(100% - clamp(18px, 3vw, 30px)) 100%,
+      0 100%
+    );
+  }
+
+  .bg-grid-light {
+    background-image:
+      linear-gradient(to right, rgb(11 20 36 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(11 20 36 / 0.05) 1px, transparent 1px);
+    background-size: 52px 52px;
+  }
+
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 52px 52px;
+  }
+}
+
+/* ————— Apparition au scroll ————— */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

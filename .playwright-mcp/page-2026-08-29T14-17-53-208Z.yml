@@ -1,0 +1,354 @@
+- generic [ref=f15e2]:
+  - link "Aller au contenu principal" [ref=f15e3] [cursor=pointer]:
+    - /url: "#contenu"
+  - banner [ref=f15e4]:
+    - navigation "Navigation principale" [ref=f15e5]:
+      - link "FOSA — retour en haut de page" [ref=f15e6] [cursor=pointer]:
+        - /url: "#"
+        - generic [ref=f15e7]: FOSA
+      - list [ref=f15e9]:
+        - listitem [ref=f15e10]:
+          - link "Solutions" [ref=f15e11] [cursor=pointer]:
+            - /url: "#solutions"
+        - listitem [ref=f15e14]:
+          - link "Secteurs" [ref=f15e15] [cursor=pointer]:
+            - /url: "#secteurs"
+        - listitem [ref=f15e18]:
+          - link "Fonctionnalités" [ref=f15e19] [cursor=pointer]:
+            - /url: "#fonctionnalites"
+        - listitem [ref=f15e22]:
+          - link "À propos" [ref=f15e23] [cursor=pointer]:
+            - /url: "#apropos"
+      - link "Nous contacter" [ref=f15e27] [cursor=pointer]:
+        - /url: mailto:contact@fosa.tech?subject=Demande%20de%20contact%20%E2%80%94%20FOSA
+  - main [ref=f15e28]:
+    - region [ref=f15e29]:
+      - generic [ref=f15e34]:
+        - generic [ref=f15e35]:
+          - paragraph [ref=f15e37]: Solutions digitales pour PME
+          - heading "Digitalisez. Simplifiez. Propulsez votre entreprise." [level=1] [ref=f15e41]:
+            - generic [ref=f15e42]: Digitalisez.
+            - generic [ref=f15e43]: Simplifiez.
+            - generic [ref=f15e44]: Propulsez votre entreprise.
+          - paragraph [ref=f15e46]: FOSA accompagne les PME dans leur transformation digitale avec des solutions simples, puissantes et évolutives.
+          - generic [ref=f15e48]:
+            - link "Découvrir nos solutions" [ref=f15e49] [cursor=pointer]:
+              - /url: "#solutions"
+            - link "Nous contacter" [ref=f15e52] [cursor=pointer]:
+              - /url: mailto:contact@fosa.tech?subject=Demande%20de%20contact%20%E2%80%94%20FOSA
+          - paragraph [ref=f15e54]: Des outils conçus pour simplifier votre quotidien et accélérer votre croissance.
+        - 'img "Aperçu du tableau de bord FOSA sur ordinateur et mobile : revenus, commandes, activité et gestion des clients" [ref=f15e63]':
+          - generic [ref=f15e64]:
+            - generic [ref=f15e65]: app.fosa.tech
+            - generic [ref=f15e74]:
+              - generic [ref=f15e76]:
+                - generic [ref=f15e77]: FOSA
+                - list [ref=f15e79]:
+                  - listitem [ref=f15e80]:
+                    - generic [ref=f15e83]: Vue d'ensemble
+                  - listitem [ref=f15e84]:
+                    - generic [ref=f15e87]: Ventes
+                  - listitem [ref=f15e88]:
+                    - generic [ref=f15e91]: Clients
+                  - listitem [ref=f15e92]:
+                    - generic [ref=f15e95]: Stocks
+                  - listitem [ref=f15e96]:
+                    - generic [ref=f15e99]: Analyse
+              - generic [ref=f15e107]:
+                - generic [ref=f15e108]:
+                  - paragraph [ref=f15e109]: Tableau de bord
+                  - generic [ref=f15e110]: Rechercher…
+                - generic [ref=f15e121]:
+                  - generic [ref=f15e122]:
+                    - paragraph [ref=f15e123]: Revenus
+                    - paragraph [ref=f15e124]: € 48 250
+                    - paragraph [ref=f15e125]:
+                      - generic [ref=f15e128]: +12,4 %
+                  - generic [ref=f15e129]:
+                    - paragraph [ref=f15e130]: Commandes
+                    - paragraph [ref=f15e131]: 1 284
+                    - paragraph [ref=f15e132]:
+                      - generic [ref=f15e135]: +8,1 %
+                  - generic [ref=f15e136]:
+                    - paragraph [ref=f15e137]: Nouveaux clients
+                    - paragraph [ref=f15e138]: "342"
+                    - paragraph [ref=f15e139]:
+                      - generic [ref=f15e142]: +5,6 %
+                - generic [ref=f15e143]:
+                  - generic [ref=f15e145]:
+                    - paragraph [ref=f15e146]: Activité
+                    - generic [ref=f15e147]: 12 mois
+                  - generic [ref=f15e166]:
+                    - paragraph [ref=f15e167]: Objectifs
+                    - generic [ref=f15e168]:
+                      - generic [ref=f15e170]:
+                        - paragraph [ref=f15e171]: Objectif annuel
+                        - paragraph [ref=f15e172]: 68 %
+                      - generic [ref=f15e176]:
+                        - paragraph [ref=f15e177]: Ce trimestre
+                        - paragraph [ref=f15e178]: 45 %
+                - generic [ref=f15e185]:
+                  - generic [ref=f15e186]:
+                    - paragraph [ref=f15e187]: Dernières commandes
+                    - generic [ref=f15e188]: Tout voir →
+                  - generic [ref=f15e189]:
+                    - generic [ref=f15e190]: Payée
+                    - generic [ref=f15e199]: En cours
+                    - generic [ref=f15e208]: Livrée
+    - region [ref=f15e243]:
+      - generic [ref=f15e248]:
+        - generic [ref=f15e249]:
+          - heading "Votre entreprise mérite mieux que des outils compliqués." [level=2] [ref=f15e251]
+          - paragraph [ref=f15e253]: "Trop d’outils, trop de tâches manuelles, trop de données dispersées. FOSA rassemble l’essentiel pour vous permettre de vous concentrer sur ce qui compte vraiment : votre entreprise."
+        - generic [ref=f15e254]:
+          - article [ref=f15e256]:
+            - paragraph [ref=f15e257]: "01"
+            - heading "Simplifiez" [level=3] [ref=f15e258]
+            - paragraph [ref=f15e259]: Centralisez vos opérations et réduisez les tâches inutiles.
+          - article [ref=f15e261]:
+            - paragraph [ref=f15e262]: "02"
+            - heading "Pilotez" [level=3] [ref=f15e263]
+            - paragraph [ref=f15e264]: Visualisez vos données et prenez de meilleures décisions.
+          - article [ref=f15e266]:
+            - paragraph [ref=f15e267]: "03"
+            - heading "Développez" [level=3] [ref=f15e268]
+            - paragraph [ref=f15e269]: Des solutions évolutives qui grandissent avec votre entreprise.
+    - region [ref=f15e270]:
+      - generic [ref=f15e271]:
+        - generic [ref=f15e272]:
+          - paragraph [ref=f15e273]: Nos solutions
+          - heading "Une technologie pensée pour votre activité." [level=2] [ref=f15e276]
+          - paragraph [ref=f15e277]: Des solutions digitales conçues autour des besoins réels des PME.
+        - generic [ref=f15e278]:
+          - article [ref=f15e280]:
+            - heading "Gestion d'entreprise" [level=3] [ref=f15e286]
+            - paragraph [ref=f15e287]: Pilotez vos opérations au quotidien depuis une interface unique, structurée et pensée pour votre métier.
+          - article [ref=f15e289]:
+            - heading "CRM" [level=3] [ref=f15e296]
+            - paragraph [ref=f15e297]: Suivez vos contacts, vos échanges et vos opportunités sans jamais perdre une information.
+          - article [ref=f15e299]:
+            - heading "Ventes & facturation" [level=3] [ref=f15e304]
+            - paragraph [ref=f15e305]: Gérez vos offres, vos commandes et vos factures en quelques clics, du devis à l’encaissement.
+          - article [ref=f15e307]:
+            - heading "Stocks" [level=3] [ref=f15e312]
+            - paragraph [ref=f15e313]: Gardez un contrôle précis de vos inventaires, de vos approvisionnements et de vos mouvements.
+          - article [ref=f15e315]:
+            - heading "Analyse & reporting" [level=3] [ref=f15e320]
+            - paragraph [ref=f15e321]: Transformez vos données en tableaux de bord clairs pour prendre de meilleures décisions.
+          - article [ref=f15e323]:
+            - heading "Automatisation" [level=3] [ref=f15e328]
+            - paragraph [ref=f15e329]: Éliminez les tâches répétitives grâce à des flux de travail intelligents et configurables.
+          - article [ref=f15e331]:
+            - heading "Solutions mobiles" [level=3] [ref=f15e335]
+            - paragraph [ref=f15e336]: Accédez à vos outils depuis n’importe quel appareil, où que vous soyez, à tout moment.
+          - article [ref=f15e338]:
+            - heading "Intelligence artificielle" [level=3] [ref=f15e346]
+            - paragraph [ref=f15e347]: Exploitez l’IA pour anticiper les tendances, automatiser les décisions et gagner du temps.
+    - region [ref=f15e348]:
+      - generic [ref=f15e349]:
+        - generic [ref=f15e350]:
+          - paragraph [ref=f15e351]: Secteurs
+          - heading "Une solution pour chaque secteur." [level=2] [ref=f15e354]
+          - paragraph [ref=f15e355]: Quel que soit votre domaine d’activité, FOSA s’adapte aux réalités de votre métier.
+        - generic [ref=f15e356]:
+          - article [ref=f15e358]:
+            - heading "Santé" [level=3] [ref=f15e362]
+            - paragraph [ref=f15e363]: Gestion des patients, des rendez-vous et des données sensibles en toute conformité.
+          - article [ref=f15e365]:
+            - heading "Commerce & Distribution" [level=3] [ref=f15e371]
+            - paragraph [ref=f15e372]: Points de vente, achats, stocks et performance commerciale, tout au même endroit.
+          - article [ref=f15e374]:
+            - heading "Hôtellerie & Restauration" [level=3] [ref=f15e379]
+            - paragraph [ref=f15e380]: Réservations, services et suivi d’activité au quotidien pour une expérience client fluide.
+          - article [ref=f15e382]:
+            - heading "Éducation & Formation" [level=3] [ref=f15e387]
+            - paragraph [ref=f15e388]: Gestion des apprenants, des programmes, des cours et des inscriptions, simplement.
+          - article [ref=f15e390]:
+            - heading "Services & Prestations" [level=3] [ref=f15e396]
+            - paragraph [ref=f15e397]: Devis, interventions, suivi des missions et facturation de vos prestations.
+          - article [ref=f15e399]:
+            - heading "Associations & ONG" [level=3] [ref=f15e403]
+            - paragraph [ref=f15e404]: Projets, adhérents, dons et reporting d’impact, centralisés et simplifiés.
+          - article [ref=f15e406]:
+            - heading "Et plus encore" [level=3] [ref=f15e411]
+            - paragraph [ref=f15e412]: Chaque métier a ses particularités. Parlons de vos besoins.
+            - link "Discutons-en" [ref=f15e413] [cursor=pointer]:
+              - /url: mailto:contact@fosa.tech?subject=Demande%20de%20contact%20%E2%80%94%20FOSA
+              - text: Discutons-en
+              - generic [ref=f15e414]: →
+    - region [ref=f15e415]:
+      - generic [ref=f15e420]:
+        - generic [ref=f15e421]:
+          - paragraph [ref=f15e422]: La plateforme
+          - heading "Toutes vos opérations. Une vision claire." [level=2] [ref=f15e425]
+          - paragraph [ref=f15e426]: Un tableau de bord pensé pour piloter votre activité d’un seul regard — où que vous soyez.
+        - generic [ref=f15e427]:
+          - 'img "Aperçu du tableau de bord FOSA sur ordinateur et mobile : revenus, commandes, activité et gestion des clients" [ref=f15e428]':
+            - generic [ref=f15e429]:
+              - generic [ref=f15e430]: app.fosa.tech
+              - generic [ref=f15e439]:
+                - generic [ref=f15e441]:
+                  - generic [ref=f15e442]: FOSA
+                  - list [ref=f15e444]:
+                    - listitem [ref=f15e445]:
+                      - generic [ref=f15e448]: Vue d'ensemble
+                    - listitem [ref=f15e449]:
+                      - generic [ref=f15e452]: Ventes
+                    - listitem [ref=f15e453]:
+                      - generic [ref=f15e456]: Clients
+                    - listitem [ref=f15e457]:
+                      - generic [ref=f15e460]: Stocks
+                    - listitem [ref=f15e461]:
+                      - generic [ref=f15e464]: Analyse
+                - generic [ref=f15e472]:
+                  - generic [ref=f15e473]:
+                    - paragraph [ref=f15e474]: Tableau de bord
+                    - generic [ref=f15e475]: Rechercher…
+                  - generic [ref=f15e486]:
+                    - generic [ref=f15e487]:
+                      - paragraph [ref=f15e488]: Revenus
+                      - paragraph [ref=f15e489]: € 48 250
+                      - paragraph [ref=f15e490]:
+                        - generic [ref=f15e493]: +12,4 %
+                    - generic [ref=f15e494]:
+                      - paragraph [ref=f15e495]: Commandes
+                      - paragraph [ref=f15e496]: 1 284
+                      - paragraph [ref=f15e497]:
+                        - generic [ref=f15e500]: +8,1 %
+                    - generic [ref=f15e501]:
+                      - paragraph [ref=f15e502]: Nouveaux clients
+                      - paragraph [ref=f15e503]: "342"
+                      - paragraph [ref=f15e504]:
+                        - generic [ref=f15e507]: +5,6 %
+                  - generic [ref=f15e508]:
+                    - generic [ref=f15e510]:
+                      - paragraph [ref=f15e511]: Activité
+                      - generic [ref=f15e512]: 12 mois
+                    - generic [ref=f15e531]:
+                      - paragraph [ref=f15e532]: Objectifs
+                      - generic [ref=f15e533]:
+                        - generic [ref=f15e535]:
+                          - paragraph [ref=f15e536]: Objectif annuel
+                          - paragraph [ref=f15e537]: 68 %
+                        - generic [ref=f15e541]:
+                          - paragraph [ref=f15e542]: Ce trimestre
+                          - paragraph [ref=f15e543]: 45 %
+                  - generic [ref=f15e550]:
+                    - generic [ref=f15e551]:
+                      - paragraph [ref=f15e552]: Dernières commandes
+                      - generic [ref=f15e553]: Tout voir →
+                    - generic [ref=f15e554]:
+                      - generic [ref=f15e555]: Payée
+                      - generic [ref=f15e564]: En cours
+                      - generic [ref=f15e573]: Livrée
+          - generic [ref=f15e608]: Données en temps réel
+          - generic [ref=f15e613]: Gestion centralisée
+          - generic [ref=f15e618]: Accessible partout
+          - generic [ref=f15e623]: Sécurité avancée
+    - region [ref=f15e628]:
+      - generic [ref=f15e629]:
+        - generic [ref=f15e630]:
+          - paragraph [ref=f15e631]: Fonctionnalités
+          - heading "Conçu pour travailler plus intelligemment." [level=2] [ref=f15e634]
+        - generic [ref=f15e635]:
+          - article [ref=f15e637]:
+            - heading "Gestion complète" [level=3] [ref=f15e643]
+            - paragraph [ref=f15e644]: Gérez vos opérations depuis une interface unique.
+          - article [ref=f15e646]:
+            - heading "Données en temps réel" [level=3] [ref=f15e652]
+            - paragraph [ref=f15e653]: Suivez les indicateurs essentiels de votre activité.
+          - article [ref=f15e655]:
+            - heading "Sécurité avancée" [level=3] [ref=f15e660]
+            - paragraph [ref=f15e661]: Protégez vos données et celles de vos clients.
+          - article [ref=f15e663]:
+            - heading "Accessible partout" [level=3] [ref=f15e670]
+            - paragraph [ref=f15e671]: Travaillez depuis votre ordinateur ou votre mobile.
+          - article [ref=f15e673]:
+            - heading "Évolutif" [level=3] [ref=f15e678]
+            - paragraph [ref=f15e679]: Une architecture pensée pour accompagner votre croissance.
+    - region [ref=f15e680]:
+      - generic [ref=f15e685]:
+        - paragraph [ref=f15e687]: Notre vision
+        - heading "Nous ne créons pas seulement des logiciels. Nous créons des outils qui font avancer les entreprises." [level=2] [ref=f15e691]: Nous ne créons pas seulement des logiciels.Nous créons des outils qui font avancer les entreprises.
+        - list [ref=f15e699]:
+          - listitem [ref=f15e700]:
+            - generic [ref=f15e703]: Intelligent.
+          - listitem [ref=f15e704]:
+            - generic [ref=f15e707]: Stratégique.
+          - listitem [ref=f15e708]:
+            - generic [ref=f15e711]: Visionnaire.
+    - region [ref=f15e712]:
+      - generic [ref=f15e719]:
+        - heading "Prêt à faire évoluer votre entreprise ?" [level=2] [ref=f15e721]
+        - paragraph [ref=f15e723]: Parlons de vos besoins et construisons ensemble une solution adaptée à votre activité.
+        - generic [ref=f15e725]:
+          - link "Démarrer avec FOSA" [ref=f15e726] [cursor=pointer]:
+            - /url: mailto:contact@fosa.tech?subject=Demande%20de%20contact%20%E2%80%94%20FOSA
+          - link "Nous contacter" [ref=f15e727] [cursor=pointer]:
+            - /url: mailto:contact@fosa.tech?subject=Demande%20de%20contact%20%E2%80%94%20FOSA
+  - contentinfo [ref=f15e728]:
+    - generic [ref=f15e730]:
+      - generic [ref=f15e731]:
+        - generic [ref=f15e732]:
+          - link "FOSA — retour en haut de page" [ref=f15e733] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f15e734]: FOSA
+          - paragraph [ref=f15e736]: Digitalisez. Simplifiez. Propulsez votre entreprise.
+          - list [ref=f15e737]:
+            - listitem [ref=f15e738]:
+              - link "FOSA sur LinkedIn" [ref=f15e739] [cursor=pointer]:
+                - /url: https://www.linkedin.com/
+            - listitem [ref=f15e742]:
+              - link "FOSA sur Facebook" [ref=f15e743] [cursor=pointer]:
+                - /url: https://www.facebook.com/
+            - listitem [ref=f15e746]:
+              - link "FOSA sur YouTube" [ref=f15e747] [cursor=pointer]:
+                - /url: https://www.youtube.com/
+        - generic [ref=f15e750]:
+          - navigation "Solutions" [ref=f15e751]:
+            - heading "Solutions" [level=3] [ref=f15e752]
+            - list [ref=f15e755]:
+              - listitem [ref=f15e756]:
+                - link "Gestion" [ref=f15e757] [cursor=pointer]:
+                  - /url: "#solutions"
+              - listitem [ref=f15e758]:
+                - link "CRM" [ref=f15e759] [cursor=pointer]:
+                  - /url: "#solutions"
+              - listitem [ref=f15e760]:
+                - link "Ventes" [ref=f15e761] [cursor=pointer]:
+                  - /url: "#solutions"
+              - listitem [ref=f15e762]:
+                - link "Automatisation" [ref=f15e763] [cursor=pointer]:
+                  - /url: "#solutions"
+              - listitem [ref=f15e764]:
+                - link "IA" [ref=f15e765] [cursor=pointer]:
+                  - /url: "#solutions"
+          - navigation "Entreprise" [ref=f15e766]:
+            - heading "Entreprise" [level=3] [ref=f15e767]
+            - list [ref=f15e770]:
+              - listitem [ref=f15e771]:
+                - link "À propos" [ref=f15e772] [cursor=pointer]:
+                  - /url: "#apropos"
+              - listitem [ref=f15e773]:
+                - link "Notre vision" [ref=f15e774] [cursor=pointer]:
+                  - /url: "#apropos"
+              - listitem [ref=f15e775]:
+                - link "Contact" [ref=f15e776] [cursor=pointer]:
+                  - /url: mailto:contact@fosa.tech?subject=Demande%20de%20contact%20%E2%80%94%20FOSA
+          - navigation "Ressources" [ref=f15e777]:
+            - heading "Ressources" [level=3] [ref=f15e778]
+            - list [ref=f15e781]:
+              - listitem [ref=f15e782]:
+                - generic [ref=f15e783]:
+                  - text: Documentation
+                  - generic [ref=f15e784]: Bientôt
+              - listitem [ref=f15e785]:
+                - generic [ref=f15e786]:
+                  - text: Blog
+                  - generic [ref=f15e787]: Bientôt
+              - listitem [ref=f15e788]:
+                - link "Support" [ref=f15e789] [cursor=pointer]:
+                  - /url: mailto:contact@fosa.tech?subject=Demande%20de%20contact%20%E2%80%94%20FOSA
+      - generic [ref=f15e790]:
+        - paragraph [ref=f15e791]: © 2026 FOSA. Tous droits réservés.
+        - paragraph [ref=f15e792]: Des outils digitaux pour les entreprises du monde entier.
