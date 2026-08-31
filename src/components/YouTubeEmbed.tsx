@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useT } from '../i18n/LanguageContext'
 import { YOUTUBE_VIDEO_URL, getYouTubeId, getYouTubeThumbnail } from '../lib/video'
 
 function PlayGlyph() {
@@ -39,6 +40,7 @@ function Frame({ children }: { children: React.ReactNode }) {
  * configurée, un visuel d'attente élégant prend sa place.
  */
 export default function YouTubeEmbed() {
+  const t = useT()
   const videoId = getYouTubeId(YOUTUBE_VIDEO_URL)
   const [playing, setPlaying] = useState(false)
 
@@ -69,11 +71,9 @@ export default function YouTubeEmbed() {
             </svg>
           </span>
           <p className="relative max-w-sm text-[15.5px] font-semibold text-white">
-            Notre vidéo de présentation arrive bientôt.
+            {t.brand.videoWaitingTitle}
           </p>
-          <p className="relative -mt-2 text-[13px] text-white/50">
-            Découvrez la plateforme FOSA en images d’ici peu.
-          </p>
+          <p className="relative -mt-2 text-[13px] text-white/50">{t.brand.videoWaitingText}</p>
         </div>
       </Frame>
     )
@@ -86,7 +86,7 @@ export default function YouTubeEmbed() {
         <div className="cut-corner aspect-video w-full overflow-hidden bg-navy-900">
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
-            title="Vidéo de présentation FOSA"
+            title={t.brand.videoIframeTitle}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="h-full w-full border-0"
@@ -102,7 +102,7 @@ export default function YouTubeEmbed() {
       <button
         type="button"
         onClick={() => setPlaying(true)}
-        aria-label="Lancer la vidéo de présentation FOSA"
+        aria-label={t.brand.videoPlayAria}
         className="group relative block aspect-video w-full overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fosa-400"
       >
         <img
@@ -125,10 +125,10 @@ export default function YouTubeEmbed() {
         </span>
         <span className="absolute bottom-4 left-5 text-left">
           <span className="block text-[13px] font-bold uppercase tracking-[0.14em] text-fosa-400">
-            La plateforme en vidéo
+            {t.brand.videoLabel}
           </span>
           <span className="mt-0.5 block text-[14.5px] font-semibold text-white">
-            Regarder la présentation
+            {t.brand.videoSub}
           </span>
         </span>
       </button>

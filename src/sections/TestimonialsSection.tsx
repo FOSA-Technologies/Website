@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Reveal from '../components/Reveal'
 import SectionHeading, { Diamond } from '../components/SectionHeading'
 import TestimonialCard from '../components/testimonials/TestimonialCard'
+import { useT } from '../i18n/LanguageContext'
 import { TESTIMONIALS } from '../data/testimonials'
 
 /** Nombre de témoignages visibles selon le breakpoint. */
@@ -55,6 +56,7 @@ const NextIcon = () => (
 )
 
 function Carousel() {
+  const t = useT()
   const perView = usePerView()
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -112,7 +114,7 @@ function Carousel() {
               className="w-full shrink-0 px-2.5 sm:w-1/2 lg:w-1/3"
               aria-label={
                 maxIndex > 0
-                  ? `Témoignage de ${testimonial.name} — ${testimonial.company}`
+                  ? `${t.testimonials.goTo} — ${testimonial.name} — ${testimonial.company}`
                   : undefined
               }
             >
@@ -127,19 +129,19 @@ function Carousel() {
           type="button"
           onClick={goPrev}
           disabled={maxIndex === 0}
-          aria-label="Témoignage précédent"
+          aria-label={t.testimonials.prev}
           className={controlClass}
         >
           <PrevIcon />
         </button>
 
-        <div className="flex items-center gap-1.5" aria-label="Pagination des témoignages">
+        <div className="flex items-center gap-1.5" aria-label={t.testimonials.pagination}>
           {Array.from({ length: maxIndex + 1 }, (_, i) => (
             <button
               key={i}
               type="button"
               onClick={() => setIndex(i)}
-              aria-label={`Aller aux témoignages ${i + 1}`}
+              aria-label={`${t.testimonials.goTo} ${i + 1}`}
               aria-current={i === safeIndex ? 'true' : undefined}
               className="flex size-8 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fosa-500"
             >
@@ -156,7 +158,7 @@ function Carousel() {
           type="button"
           onClick={goNext}
           disabled={maxIndex === 0}
-          aria-label="Témoignage suivant"
+          aria-label={t.testimonials.next}
           className={controlClass}
         >
           <NextIcon />
@@ -172,13 +174,15 @@ function Carousel() {
  * de témoignage inventé.
  */
 export default function TestimonialsSection() {
+  const t = useT()
+
   return (
     <section id="temoignages" className="py-20 lg:py-28" aria-labelledby="testimonials-title">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-8">
         <SectionHeading
-          overline="Témoignages"
-          title="Ce que nos clients pensent de FOSA"
-          subtitle="La confiance de nos clients est notre meilleure preuve de qualité."
+          overline={t.testimonials.overline}
+          title={t.testimonials.title}
+          subtitle={t.testimonials.subtitle}
         />
 
         {TESTIMONIALS.length > 0 ? (
@@ -198,10 +202,10 @@ export default function TestimonialsSection() {
               />
               <Diamond className="mx-auto size-2.5 text-fosa-500" />
               <h3 className="mt-5 text-xl font-semibold tracking-[-0.01em] text-navy-900">
-                Les premiers témoignages de nos clients apparaîtront ici.
+                {t.testimonials.emptyTitle}
               </h3>
               <p className="mx-auto mt-2.5 max-w-md text-[15px] leading-relaxed text-ink">
-                Nous publierons bientôt les retours de nos premiers clients, avec leur accord.
+                {t.testimonials.emptyText}
               </p>
             </div>
           </Reveal>

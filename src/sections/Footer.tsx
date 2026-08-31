@@ -1,6 +1,7 @@
 import Logo from '../components/Logo'
 import { Diamond } from '../components/SectionHeading'
-import { FOOTER_COMPANY, FOOTER_RESOURCES, FOOTER_SOLUTIONS, SOCIAL_LINKS } from '../lib/content'
+import { useT } from '../i18n/LanguageContext'
+import { CONTACT_MAILTO, SOCIAL_LINKS } from '../lib/content'
 
 function SocialIcon({ label }: { label: string }) {
   const paths: Record<string, string> = {
@@ -31,6 +32,12 @@ function FooterColumn({ title, children }: { title: string; children: React.Reac
 }
 
 export default function Footer() {
+  const t = useT()
+  const companyLinks = t.footer.company.map((link) => ({
+    ...link,
+    href: link.href || CONTACT_MAILTO,
+  }))
+
   return (
     <footer className="bg-navy-900">
       {/* Liseré orange : signature de la marque */}
@@ -40,11 +47,11 @@ export default function Footer() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Marque */}
           <div className="lg:col-span-5">
-            <a href="#" aria-label="FOSA — retour en haut de page" className="inline-block">
+            <a href="#" aria-label={t.common.logoBackToTop} className="inline-block">
               <Logo dark size="lg" />
             </a>
             <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-white/55">
-              Digitalisez. Simplifiez. Propulsez votre entreprise.
+              {t.footer.tagline}
             </p>
             <ul className="mt-7 flex gap-3">
               {SOCIAL_LINKS.map((social) => (
@@ -53,7 +60,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`FOSA sur ${social.label}`}
+                    aria-label={`${t.footer.socialAria} ${social.label}`}
                     className="flex size-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition-colors duration-200 hover:border-fosa-400/40 hover:text-fosa-400"
                   >
                     <SocialIcon label={social.label} />
@@ -65,8 +72,8 @@ export default function Footer() {
 
           {/* Liens */}
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-7">
-            <FooterColumn title="Solutions">
-              {FOOTER_SOLUTIONS.map((link) => (
+            <FooterColumn title={t.footer.solutionsTitle}>
+              {t.footer.solutions.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="text-[14.5px] text-white/55 transition-colors hover:text-white">
                     {link.label}
@@ -75,8 +82,8 @@ export default function Footer() {
               ))}
             </FooterColumn>
 
-            <FooterColumn title="Entreprise">
-              {FOOTER_COMPANY.map((link) => (
+            <FooterColumn title={t.footer.companyTitle}>
+              {companyLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="text-[14.5px] text-white/55 transition-colors hover:text-white">
                     {link.label}
@@ -85,20 +92,20 @@ export default function Footer() {
               ))}
             </FooterColumn>
 
-            <FooterColumn title="Ressources">
-              {FOOTER_RESOURCES.map((item) => (
+            <FooterColumn title={t.footer.resourcesTitle}>
+              {t.footer.resources.map((item) => (
                 <li key={item.label}>
-                  {'href' in item ? (
-                    <a href={item.href} className="text-[14.5px] text-white/55 transition-colors hover:text-white">
-                      {item.label}
-                    </a>
-                  ) : (
+                  {'soon' in item && item.soon ? (
                     <span className="inline-flex items-center gap-2 text-[14.5px] text-white/40">
                       {item.label}
                       <span className="rounded-[4px] border border-fosa-400/30 px-1.5 py-[3px] text-[10px] font-semibold uppercase tracking-[0.08em] text-fosa-400">
-                        Bientôt
+                        {t.footer.soon}
                       </span>
                     </span>
+                  ) : (
+                    <a href={CONTACT_MAILTO} className="text-[14.5px] text-white/55 transition-colors hover:text-white">
+                      {item.label}
+                    </a>
                   )}
                 </li>
               ))}
@@ -107,10 +114,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col justify-between gap-3 border-t border-white/[0.07] pt-7 sm:flex-row">
-          <p className="text-[13.5px] text-white/40">© 2026 FOSA. Tous droits réservés.</p>
-          <p className="text-[13.5px] text-white/40">
-            Des outils digitaux pour les entreprises du monde entier.
-          </p>
+          <p className="text-[13.5px] text-white/40">{t.footer.copyright}</p>
+          <p className="text-[13.5px] text-white/40">{t.footer.world}</p>
         </div>
       </div>
     </footer>

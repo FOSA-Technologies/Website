@@ -2,8 +2,9 @@ import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import SectionHeading, { Diamond } from '../components/SectionHeading'
 import ProductCard from '../components/products/ProductCard'
+import { useT } from '../i18n/LanguageContext'
 import { PRODUCTS } from '../data/products'
-import { CONTACT_EMAIL, SOLUTIONS } from '../lib/content'
+import { CONTACT_EMAIL } from '../lib/content'
 
 /** CTA « Être informé » : demande d'alerte produit par e-mail. */
 const NOTIFY_MAILTO = `mailto:${CONTACT_EMAIL}?subject=Je%20souhaite%20%C3%AAtre%20inform%C3%A9%20du%20lancement%20des%20produits%20FOSA`
@@ -14,13 +15,15 @@ const NOTIFY_MAILTO = `mailto:${CONTACT_EMAIL}?subject=Je%20souhaite%20%C3%AAtre
  * jamais de produit fictif.
  */
 export default function ProductsSection() {
+  const t = useT()
+
   return (
     <section id="produits" className="py-20 lg:py-28" aria-labelledby="products-title">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-8">
         <SectionHeading
-          overline="Nos produits"
-          title="Découvrez nos produits"
-          subtitle="Des solutions conçues pour résoudre des problèmes concrets et simplifier le quotidien des entreprises."
+          overline={t.products.overline}
+          title={t.products.title}
+          subtitle={t.products.subtitle}
         />
 
         {PRODUCTS.length > 0 ? (
@@ -54,16 +57,14 @@ export default function ProductsSection() {
               <div className="relative mx-auto max-w-2xl text-center">
                 <Diamond className="mx-auto size-2.5 text-fosa-400" />
                 <h3 className="mt-5 text-2xl font-bold tracking-[-0.02em] text-white text-balance sm:text-3xl">
-                  Nos prochaines solutions arrivent bientôt.
+                  {t.products.comingTitle}
                 </h3>
                 <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-white/60 sm:text-base">
-                  Nous construisons des produits SaaS prêts à l’emploi pour accompagner la
-                  transformation digitale des PME. Soyez informé en avant-première de leur
-                  lancement.
+                  {t.products.comingText}
                 </p>
 
                 <ul className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
-                  {SOLUTIONS.map((solution) => (
+                  {t.solutions.items.map((solution) => (
                     <li
                       key={solution.title}
                       className="rounded-[6px] border border-white/10 px-3 py-1.5 text-[12.5px] font-medium text-white/65"
@@ -74,7 +75,7 @@ export default function ProductsSection() {
                 </ul>
 
                 <Button href={NOTIFY_MAILTO} variant="primaryOnDark" size="lg" className="mt-9">
-                  Être informé
+                  {t.products.notify}
                 </Button>
               </div>
             </div>

@@ -1,24 +1,28 @@
 import Reveal from '../components/Reveal'
 import SectionHeading from '../components/SectionHeading'
 import { IndustryIcon } from '../components/GeometricIcons'
-import { CONTACT_MAILTO, INDUSTRIES } from '../lib/content'
+import { useT } from '../i18n/LanguageContext'
+import { CONTACT_MAILTO } from '../lib/content'
+import type { Industry } from '../lib/content'
 
 export default function Industries() {
+  const t = useT()
+
   return (
     <section id="secteurs" className="bg-surface py-20 lg:py-28" aria-labelledby="industries-title">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-8">
         <SectionHeading
-          overline="Secteurs"
-          title="Une solution pour chaque secteur."
-          subtitle="Quel que soit votre domaine d’activité, FOSA s’adapte aux réalités de votre métier."
+          overline={t.industries.overline}
+          title={t.industries.title}
+          subtitle={t.industries.subtitle}
         />
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {INDUSTRIES.map((industry, i) => (
+          {t.industries.items.map((industry, i) => (
             <Reveal key={industry.title} delay={(i % 4) * 70}>
               <article className="group h-full rounded-xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-fosa-300 hover:shadow-card">
                 <div className="flex size-11 items-center justify-center rounded-[10px] bg-surface text-navy-900 transition-colors duration-300 group-hover:bg-fosa-500 group-hover:text-white">
-                  <IndustryIcon name={industry.icon} />
+                  <IndustryIcon name={industry.icon as Industry['icon']} />
                 </div>
                 <h3 className="mt-5 text-[16.5px] font-semibold text-navy-900">{industry.title}</h3>
                 <p className="mt-2 text-[14.5px] leading-relaxed text-ink">{industry.description}</p>
@@ -47,15 +51,15 @@ export default function Industries() {
                   <path d="M12 5v14M5 12h14" />
                 </svg>
               </div>
-              <h3 className="mt-5 text-[16.5px] font-semibold">Et plus encore</h3>
+              <h3 className="mt-5 text-[16.5px] font-semibold">{t.industries.moreTitle}</h3>
               <p className="mt-2 text-[14.5px] leading-relaxed text-white/55">
-                Chaque métier a ses particularités. Parlons de vos besoins.
+                {t.industries.moreText}
               </p>
               <a
                 href={CONTACT_MAILTO}
                 className="mt-auto inline-flex items-center gap-2 pt-5 text-[14.5px] font-semibold text-fosa-400 transition-colors hover:text-fosa-300"
               >
-                Discutons-en
+                {t.industries.moreCta}
                 <span aria-hidden="true">→</span>
               </a>
             </article>

@@ -1,5 +1,6 @@
 import Button from '../components/Button'
 import Reveal from '../components/Reveal'
+import { useT } from '../i18n/LanguageContext'
 import { WHATSAPP_URL } from '../lib/content'
 
 function WhatsAppIcon() {
@@ -18,6 +19,8 @@ function WhatsAppIcon() {
 
 /** CTA final : fond orange, composition géométrique renard FOSA. */
 export default function FinalCta() {
+  const t = useT()
+
   return (
     <section id="contact" className="relative overflow-hidden bg-fosa-500 py-20 lg:py-28" aria-labelledby="cta-title">
       {/* Renard géométrique en filigrane : blanc absorbé par le fond orange */}
@@ -58,22 +61,21 @@ export default function FinalCta() {
             id="cta-title"
             className="text-3xl font-bold leading-[1.1] tracking-[-0.02em] text-navy-900 text-balance sm:text-4xl lg:text-[2.9rem]"
           >
-            Votre projet mérite une solution adaptée.
+            {t.finalCta.title}
           </h2>
         </Reveal>
         <Reveal delay={100}>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-navy-900/75">
-            Décrivez-nous votre besoin, obtenez une première estimation et échangez avec notre
-            équipe.
+            {t.finalCta.text}
           </p>
         </Reveal>
         <Reveal delay={200}>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button href="#devis" variant="navyOnOrange" size="lg">
-              Obtenir une estimation
+              {t.finalCta.estimate}
             </Button>
             <Button href="#rendez-vous" variant="whiteOnOrange" size="lg">
-              Prendre rendez-vous
+              {t.finalCta.booking}
             </Button>
           </div>
         </Reveal>
@@ -85,7 +87,7 @@ export default function FinalCta() {
             className="mt-7 inline-flex items-center gap-2 text-[14.5px] font-medium text-navy-900/70 underline-offset-4 transition-colors hover:text-navy-900 hover:underline"
           >
             <WhatsAppIcon />
-            Ou discutez directement avec nous sur WhatsApp
+            {t.finalCta.whatsapp}
           </a>
         </Reveal>
       </div>

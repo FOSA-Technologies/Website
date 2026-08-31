@@ -2,14 +2,8 @@ import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import SectionHeading, { Diamond } from '../components/SectionHeading'
 import CalendlyEmbed from '../components/booking/CalendlyEmbed'
+import { useT } from '../i18n/LanguageContext'
 import { BOOKING_MAILTO, CALENDLY_URL } from '../lib/calendly'
-
-const BENEFITS = [
-  'Analyse de vos besoins',
-  'Identification des meilleures solutions',
-  'Conseils personnalisés',
-  'Sans engagement',
-] as const
 
 function CheckIcon() {
   return (
@@ -31,6 +25,7 @@ function CheckIcon() {
 
 /** Panneau d'attente : affiché tant que CALENDLY_URL n'est pas configurée. */
 function BookingFallback() {
+  const t = useT()
   return (
     <div className="cut-corner relative overflow-hidden bg-navy-900 p-8 sm:p-10">
       <div
@@ -46,13 +41,13 @@ function BookingFallback() {
       <div className="relative">
         <Diamond className="size-2.5 text-fosa-400" />
         <h3 className="mt-5 text-xl font-semibold tracking-[-0.01em] text-white">
-          Notre agenda en ligne arrive bientôt.
+          {t.booking.fallbackTitle}
         </h3>
         <p className="mt-2.5 max-w-sm text-[15px] leading-relaxed text-white/60">
-          En attendant, écrivez-nous pour convenir d’un créneau qui vous arrange.
+          {t.booking.fallbackText}
         </p>
         <Button href={BOOKING_MAILTO} variant="primaryOnDark" size="lg" className="mt-7">
-          Proposer un créneau
+          {t.booking.fallbackCta}
         </Button>
       </div>
     </div>
@@ -61,28 +56,26 @@ function BookingFallback() {
 
 /** Prise de rendez-vous : bénéfices à gauche, calendrier Calendly à droite. */
 export default function BookingSection() {
+  const t = useT()
+
   return (
     <section id="rendez-vous" className="py-20 lg:py-28" aria-labelledby="booking-title">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-8">
         <SectionHeading
           align="left"
-          overline="Rendez-vous"
-          title="Parlons de votre projet."
-          subtitle="Réservez un créneau avec notre équipe et discutons de vos besoins."
+          overline={t.booking.overline}
+          title={t.booking.title}
+          subtitle={t.booking.subtitle}
         />
 
         <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-14">
           {/* Argumentaire */}
           <Reveal>
             <div className="flex flex-col gap-8 lg:sticky lg:top-28">
-              <p className="max-w-lg text-[15.5px] leading-relaxed text-ink">
-                Un échange de 30 minutes, à distance, pour comprendre votre contexte et identifier
-                les solutions digitales les plus pertinentes pour votre activité. Aucun jargon, aucun
-                engagement.
-              </p>
+              <p className="max-w-lg text-[15.5px] leading-relaxed text-ink">{t.booking.text}</p>
 
               <ul className="grid gap-3.5 sm:grid-cols-2">
-                {BENEFITS.map((benefit) => (
+                {t.booking.benefits.map((benefit) => (
                   <li key={benefit} className="flex items-center gap-3">
                     <span className="flex size-9 shrink-0 items-center justify-center rounded-[8px] bg-fosa-50 text-fosa-700">
                       <CheckIcon />
@@ -93,14 +86,14 @@ export default function BookingSection() {
               </ul>
 
               <p className="max-w-lg border-t border-line/70 pt-6 text-[13.5px] leading-relaxed text-ink">
-                Vous préférez écrire ?{' '}
+                {t.booking.emailNoteA}{' '}
                 <a
                   href={BOOKING_MAILTO}
                   className="font-semibold text-fosa-700 underline underline-offset-4 transition-colors hover:text-fosa-600"
                 >
-                  Contactez-nous par e-mail
+                  {t.booking.emailLink}
                 </a>{' '}
-                — nous revenons vers vous sous 24 h ouvrées.
+                {t.booking.emailNoteB}
               </p>
             </div>
           </Reveal>

@@ -6,16 +6,21 @@
     <title>FOSA — Solutions digitales pour PME | Digitalisez. Simplifiez. Propulsez.</title>
     <meta
       name="description"
-      content="FOSA accompagne les PME dans leur transformation digitale : gestion d'entreprise, CRM, ventes & facturation, stocks, analyse, automatisation et intelligence artificielle. Découvrez nos produits SaaS, obtenez une estimation de projet et prenez rendez-vous avec notre équipe."
+      content="FOSA accompagne les PME dans leur transformation digitale : gestion d'entreprise, CRM, ventes & facturation, stocks, analyse, automatisation et intelligence artificielle. Découvrez nos produits SaaS, obtenez une estimation de projet en ligne et prenez rendez-vous avec notre équipe."
     />
     <meta
       name="keywords"
-      content="FOSA, solutions digitales, PME, logiciels professionnels, gestion d'entreprise, CRM, facturation, stocks, automatisation, intelligence artificielle, transformation digitale, produits SaaS, devis en ligne"
+      content="FOSA, solutions digitales, PME, logiciels professionnels, gestion d'entreprise, CRM, facturation, stocks, automatisation, intelligence artificielle, transformation digitale, produits SaaS, devis en ligne, prise de rendez-vous, Madagascar"
     />
     <meta name="author" content="FOSA" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#0B1424" />
     <link rel="canonical" href="https://fosa.tech/" />
+
+    <!-- Versions linguistiques (URL distincte par langue : / et /?lang=en) -->
+    <link rel="alternate" hreflang="fr" href="https://fosa.tech/" />
+    <link rel="alternate" hreflang="en" href="https://fosa.tech/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://fosa.tech/" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
@@ -26,6 +31,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="FOSA" />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:url" content="https://fosa.tech/" />
     <meta property="og:title" content="FOSA — Digitalisez. Simplifiez. Propulsez votre entreprise." />
     <meta
@@ -46,21 +52,49 @@
     />
     <meta name="twitter:image" content="https://fosa.tech/assets/og-image.png" />
 
-    <!-- Structured data -->
+    <!-- Données structurées : organisation + site web bilingue -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "FOSA",
-        "url": "https://fosa.tech/",
-        "logo": "https://fosa.tech/assets/favicon-512.png",
-        "slogan": "Digitalisez. Simplifiez. Propulsez votre entreprise.",
-        "description": "FOSA crée des solutions digitales modernes pour les PME : gestion, automatisation, données et outils métiers.",
-        "email": "contact@fosa.tech",
-        "sameAs": [
-          "https://web.facebook.com/profile.php?id=61594040396729",
-          "https://www.linkedin.com/",
-          "https://www.instagram.com/"
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://fosa.tech/#organization",
+            "name": "FOSA",
+            "url": "https://fosa.tech/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://fosa.tech/assets/favicon-512.png",
+              "width": 512,
+              "height": 512
+            },
+            "image": "https://fosa.tech/assets/og-image.png",
+            "slogan": "Digitalisez. Simplifiez. Propulsez votre entreprise.",
+            "description": "FOSA crée des solutions digitales modernes pour les PME : gestion d'entreprise, CRM, automatisation, données et outils métiers.",
+            "email": "contact@fosa.tech",
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "email": "contact@fosa.tech",
+                "contactType": "customer service",
+                "availableLanguage": ["French", "English"]
+              }
+            ],
+            "sameAs": [
+              "https://web.facebook.com/profile.php?id=61594040396729",
+              "https://www.linkedin.com/",
+              "https://www.instagram.com/"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://fosa.tech/#website",
+            "url": "https://fosa.tech/",
+            "name": "FOSA",
+            "description": "Solutions digitales pour PME : gestion d'entreprise, CRM, automatisation et intelligence artificielle.",
+            "inLanguage": ["fr-FR", "en-US"],
+            "publisher": { "@id": "https://fosa.tech/#organization" }
+          }
         ]
       }
     </script>

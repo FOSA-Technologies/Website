@@ -1,14 +1,16 @@
 import { useState, type FormEvent } from 'react'
 import Reveal from '../components/Reveal'
 import { Diamond } from '../components/SectionHeading'
+import { useT } from '../i18n/LanguageContext'
 import { getStoredSubscription, subscribeToNewsletter, type SubscribeStatus } from '../lib/newsletter'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 type FormStatus = 'idle' | 'submitting' | SubscribeStatus
 
-/** Newsletter : inscription persistante (Mailchimp), déduplication locale + serveur. */
+/** Newsletter : inscription persistante (Mailchimp / FormSubmit), déduplication locale + serveur. */
 export default function NewsletterSection() {
+  const t = useT()
   /* Un visiteur déjà inscrit sur cet appareil revoit l'état « déjà inscrit »,
      pas le formulaire — aucune inscription redondante possible. */
   const [email, setEmail] = useState(() => getStoredSubscription() ?? '')
@@ -23,7 +25,7 @@ export default function NewsletterSection() {
     const value = email.trim()
 
     if (!EMAIL_PATTERN.test(value)) {
-      setError('Entrez une adresse e-mail valide, par exemple vous@entreprise.com')
+      setError(t.newsletter.invalid)
       return
     }
 
@@ -34,7 +36,7 @@ export default function NewsletterSection() {
     const result = await subscribeToNewsletter(value)
     setStatus(result.status)
     if (result.status === 'error') {
-      setError(result.message ?? 'Une erreur est survenue. Réessayez dans un instant.')
+      setError(result.message ?? t.newsletter.genericError)
     } else if (result.status === 'already' && result.message) {
       setServerMessage(result.message)
     }
@@ -67,17 +69,17 @@ export default function NewsletterSection() {
         <Reveal>
           <p className="inline-flex items-center gap-2.5 text-[12px] font-bold uppercase tracking-[0.18em] text-fosa-400">
             <Diamond />
-            Newsletter
+            {t.newsletter.overline}
           </p>
           <h2
             id="newsletter-title"
             className="mt-5 text-3xl font-bold tracking-[-0.02em] text-white text-balance sm:text-4xl"
           >
-            Restez informé de nos <span className="text-fosa-400">lancements produits</span>.
+            {t.newsletter.titleA} <span className="text-fosa-400">{t.newsletter.titleAccent}</span>
+            {t.newsletter.titleB}
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[15.5px] leading-relaxed text-white/60">
-            Un e-mail par mois maximum : nouveautés, conseils de digitalisation pour PME et accès
-            anticipés. Désinscription en un clic.
+            {t.newsletter.text}
           </p>
         </Reveal>
 
@@ -90,13 +92,12 @@ export default function NewsletterSection() {
               <Diamond className="mt-1.5 size-2 shrink-0 text-fosa-400" />
               <div>
                 <p className="text-[15.5px] font-semibold text-white">
-                  {status === 'success' ? 'Bienvenue à bord !' : 'Vous êtes déjà inscrit'}
+                  {status === 'success' ? t.newsletter.successTitle : t.newsletter.alreadyTitle}
                 </p>
                 <p className="mt-1 text-[14px] leading-relaxed text-white/60">
                   {status === 'success'
-                    ? 'Votre adresse a bien été enregistrée. À très vite dans votre boîte de réception.'
-                    : serverMessage ??
-                      'Cette adresse figure déjà dans notre liste — aucun doublon n’a été créé.'}
+                    ? t.newsletter.successText
+                    : serverMessage ?? t.newsletter.alreadyText}
                 </p>
               </div>
             </div>
@@ -104,13 +105,13 @@ export default function NewsletterSection() {
             <form onSubmit={handleSubmit} noValidate className="mt-9">
               <div className="flex flex-col gap-3 sm:flex-row">
                 <label htmlFor="newsletter-email" className="sr-only">
-                  Votre adresse e-mail
+                  {t.newsletter.placeholder}
                 </label>
                 <input
                   id="newsletter-email"
                   type="email"
                   autoComplete="email"
-                  placeholder="vous@entreprise.com"
+                  placeholder={t.newsletter.placeholder}
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   disabled={status === 'submitting'}
@@ -121,7 +122,7 @@ export default function NewsletterSection() {
                   disabled={status === 'submitting'}
                   className="h-12 rounded-[10px] bg-fosa-500 px-7 text-[15px] font-semibold text-navy-900 transition-colors duration-200 hover:bg-fosa-400 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fosa-400"
                 >
-                  {status === 'submitting' ? 'Inscription…' : 'S’inscrire'}
+                  {status === 'submitting' ? t.newsletter.submitting : t.newsletter.submit}
                 </button>
               </div>
 
@@ -131,9 +132,7 @@ export default function NewsletterSection() {
                 </p>
               ) : null}
 
-              <p className="mt-3 text-[12.5px] text-white/40">
-                Votre adresse reste privée. Aucun spam, jamais.
-              </p>
+              <p className="mt-3 text-[12.5px] text-white/40">{t.newsletter.privacy}</p>
             </form>
           )}
         </Reveal>

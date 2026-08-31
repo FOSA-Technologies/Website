@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import Logo from './Logo'
 import Button from './Button'
+import LanguageSwitch from './LanguageSwitch'
 import { Diamond } from './SectionHeading'
-import { CONTACT_MAILTO, NAV_LINKS } from '../lib/content'
+import { useT } from '../i18n/LanguageContext'
+import { CONTACT_MAILTO } from '../lib/content'
 
 export default function Navbar() {
+  const t = useT()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -41,13 +44,13 @@ export default function Navbar() {
         className="mx-auto flex h-[76px] max-w-[1200px] items-center justify-between px-5 sm:px-6 lg:px-8"
         aria-label="Navigation principale"
       >
-        <a href="#" aria-label="FOSA — retour en haut de page" className="shrink-0">
+        <a href="#" aria-label={t.common.logoBackToTop} className="shrink-0">
           <Logo />
         </a>
 
         {/* Navigation desktop */}
         <ul className="hidden items-center gap-8 lg:flex">
-          {NAV_LINKS.map((link) => (
+          {t.nav.links.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
@@ -60,9 +63,10 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-3 lg:flex">
+          <LanguageSwitch />
           <Button href={CONTACT_MAILTO} variant="secondary" size="md">
-            Nous contacter
+            {t.nav.contact}
           </Button>
         </div>
 
@@ -72,7 +76,7 @@ export default function Navbar() {
           className="relative flex size-11 items-center justify-center rounded-lg lg:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
-          aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
           onClick={() => setOpen((v) => !v)}
         >
           <span
@@ -95,7 +99,7 @@ export default function Navbar() {
           className="border-t border-line bg-white px-5 pb-8 pt-4 shadow-[0_24px_48px_-24px_rgb(11_20_36/0.25)] lg:hidden"
         >
           <ul className="flex flex-col">
-            {NAV_LINKS.map((link) => (
+            {t.nav.links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -108,9 +112,12 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <Button href={CONTACT_MAILTO} variant="primary" size="lg" className="mt-6 w-full">
-            Nous contacter
-          </Button>
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <LanguageSwitch />
+            <Button href={CONTACT_MAILTO} variant="primary" size="lg" className="flex-1">
+              {t.nav.contact}
+            </Button>
+          </div>
         </div>
       ) : null}
     </header>

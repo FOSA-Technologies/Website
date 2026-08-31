@@ -1,11 +1,12 @@
 import Reveal from '../components/Reveal'
 import { Diamond } from '../components/SectionHeading'
 import YouTubeEmbed from '../components/YouTubeEmbed'
-
-const TAGLINE = ['Intelligent.', 'Stratégique.', 'Visionnaire.'] as const
+import { useT } from '../i18n/LanguageContext'
 
 /** Section philosophie : le statement de marque FOSA. */
 export default function BrandStatement() {
+  const t = useT()
+
   return (
     <section id="apropos" className="relative overflow-hidden bg-navy-900 py-24 lg:py-32" aria-labelledby="brand-title">
       {/* Composition géométrique renard : discrète, structurante */}
@@ -30,7 +31,7 @@ export default function BrandStatement() {
         <Reveal>
           <p className="inline-flex items-center gap-2.5 text-[12px] font-bold uppercase tracking-[0.18em] text-fosa-400">
             <Diamond />
-            Notre vision
+            {t.brand.overline}
           </p>
         </Reveal>
 
@@ -39,10 +40,10 @@ export default function BrandStatement() {
             id="brand-title"
             className="mt-7 text-3xl font-bold leading-[1.14] tracking-[-0.025em] text-white text-balance sm:text-4xl lg:text-[3.1rem]"
           >
-            Nous ne créons pas seulement des logiciels.
+            {t.brand.titleA}
             <br />
-            Nous créons des outils qui <span className="text-fosa-400">font avancer</span> les
-            entreprises.
+            {t.brand.titleB} <span className="text-fosa-400">{t.brand.titleAccent}</span>{' '}
+            {t.brand.titleEnd}
           </h2>
         </Reveal>
 
@@ -56,7 +57,7 @@ export default function BrandStatement() {
 
         <Reveal delay={280}>
           <ul className="mt-9 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {TAGLINE.map((word) => (
+            {t.brand.tagline.map((word) => (
               <li key={word} className="flex items-center gap-2.5">
                 <Diamond className="size-1.5 text-fosa-500" />
                 <span className="text-lg font-medium text-white/70 sm:text-xl">{word}</span>

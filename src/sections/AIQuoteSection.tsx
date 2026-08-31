@@ -2,17 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import SectionHeading, { Diamond } from '../components/SectionHeading'
+import { useT } from '../i18n/LanguageContext'
+import type { QuoteOptionDict } from '../i18n/translations'
 import {
-  BUDGET_OPTIONS,
-  DEADLINE_OPTIONS,
-  QUOTE_LEGAL_NOTE,
-  SIZE_OPTIONS,
-  SOLUTION_OPTIONS,
   generateQuote,
   type Budget,
   type CompanySize,
   type Deadline,
-  type QuoteOption,
   type QuoteResult,
   type SolutionType,
 } from '../lib/quote'
@@ -37,35 +33,18 @@ const INITIAL_DRAFT: Draft = {
   budget: 'non-precise',
 }
 
-const STEPS = [
-  { name: 'Solution', question: 'Quel type de solution recherchez-vous ?' },
-  { name: 'Projet', question: 'Parlez-nous de votre projet' },
-  { name: 'Entreprise', question: 'Quelle est la taille de votre entreprise ?' },
-  { name: 'Délai', question: 'Quel est votre délai ?' },
-  { name: 'Budget', question: 'Quel est votre budget approximatif ?' },
-] as const
-
-const ANALYSIS_STEPS = [
-  'Analyse de votre besoin…',
-  'Identification des fonctionnalités…',
-  'Évaluation de la complexité…',
-  'Préparation de votre estimation…',
-] as const
-
 const DESCRIPTION_MIN_LENGTH = 20
 
-function validateStep(step: number, draft: Draft): string | null {
+function validateStep(step: number, draft: Draft, minLength: number): string | null {
   switch (step) {
     case 0:
-      return draft.type ? null : 'Sélectionnez une solution pour continuer.'
+      return draft.type ? null : 'type'
     case 1:
-      return draft.description.trim().length >= DESCRIPTION_MIN_LENGTH
-        ? null
-        : `Décrivez votre besoin en quelques phrases (${DESCRIPTION_MIN_LENGTH} caractères minimum).`
+      return draft.description.trim().length >= minLength ? null : 'description'
     case 2:
-      return draft.size ? null : 'Sélectionnez la taille de votre entreprise.'
+      return draft.size ? null : 'size'
     case 3:
-      return draft.deadline ? null : 'Sélectionnez votre délai.'
+      return draft.deadline ? null : 'deadline'
     default:
       return null
   }
@@ -84,7 +63,7 @@ function OptionCard({
   onChange,
 }: {
   name: string
-  option: QuoteOption<string>
+  option: QuoteOptionDict
   checked: boolean
   onChange: () => void
 }) {
@@ -148,39 +127,37 @@ const BackIcon = () => (
 /* ————————————————————— Vues : chargement, erreur, résultat ————————————————————— */
 
 function LoadingView({ step }: { step: number }) {
+  const t = useT()
   return (
     <div className="flex min-h-[380px] flex-col items-center justify-center gap-5 text-center">
       <span
         className="flex size-14 items-center justify-center rounded-full border-2 border-fosa-500/25 border-t-fosa-500 animate-spin motion-reduce:animate-none"
         role="status"
-        aria-label="Analyse en cours"
+        aria-label={t.quote.loading.title}
       >
         <Diamond className="size-3 text-fosa-500" />
       </span>
       <p className="text-[15.5px] font-semibold text-navy-900" aria-live="polite">
-        {ANALYSIS_STEPS[Math.min(step, ANALYSIS_STEPS.length - 1)]}
+        {t.quote.loading.steps[Math.min(step, t.quote.loading.steps.length - 1)]}
       </p>
-      <p className="text-[13.5px] text-ink">Quelques secondes suffisent.</p>
+      <p className="text-[13.5px] text-ink">{t.quote.loading.subtitle}</p>
     </div>
   )
 }
 
 function ErrorView({ onRetry }: { onRetry: () => void }) {
+  const t = useT()
   return (
     <div className="flex min-h-[380px] flex-col items-center justify-center gap-4 text-center">
       <Diamond className="size-2.5 text-fosa-500" />
-      <p className="text-[15.5px] font-semibold text-navy-900">
-        Une erreur est survenue pendant l’analyse.
-      </p>
-      <p className="max-w-sm text-[14px] leading-relaxed text-ink">
-        Vos réponses ont été conservées. Réessayez dans un instant.
-      </p>
+      <p className="text-[15.5px] font-semibold text-navy-900">{t.quote.error.title}</p>
+      <p className="max-w-sm text-[14px] leading-relaxed text-ink">{t.quote.error.text}</p>
       <button
         type="button"
         onClick={onRetry}
         className="mt-2 inline-flex items-center justify-center gap-2 rounded-[10px] bg-fosa-500 px-6 py-3 text-[15px] font-semibold text-navy-900 transition-colors duration-200 hover:bg-fosa-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fosa-500"
       >
-        Réessayer
+        {t.quote.error.retry}
       </button>
     </div>
   )
@@ -193,6 +170,7 @@ const COMPLEXITY_LEVELS: Record<QuoteResult['complexity'], number> = {
 }
 
 function ResultView({ result, onRestart }: { result: QuoteResult; onRestart: () => void }) {
+  const t = useT()
   const headingRef = useRef<HTMLHeadingElement>(null)
 
   /* Le focus est déplacé sur le résultat pour les lecteurs d'écran. */
@@ -201,6 +179,12 @@ function ResultView({ result, onRestart }: { result: QuoteResult; onRestart: () 
   }, [])
 
   const level = COMPLEXITY_LEVELS[result.complexity]
+  const complexityLabel =
+    result.complexity === 'Simple'
+      ? t.quote.result.complexityValues.simple
+      : result.complexity === 'Modérée'
+        ? t.quote.result.complexityValues.moderate
+        : t.quote.result.complexityValues.high
 
   return (
     <div>
@@ -209,16 +193,16 @@ function ResultView({ result, onRestart }: { result: QuoteResult; onRestart: () 
         tabIndex={-1}
         className="text-2xl font-bold tracking-[-0.02em] text-navy-900 focus:outline-none"
       >
-        Analyse de votre projet
+        {t.quote.result.title}
       </h3>
       <p className="mt-3 text-[15px] leading-relaxed text-ink">{result.summary}</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-line bg-white p-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-fosa-700">
-            Complexité
+            {t.quote.result.complexityLabel}
           </p>
-          <p className="mt-2 text-[15px] font-semibold text-navy-900">{result.complexity}</p>
+          <p className="mt-2 text-[15px] font-semibold text-navy-900">{complexityLabel}</p>
           <div className="mt-3 flex gap-1.5" aria-hidden="true">
             {[1, 2, 3].map((segment) => (
               <span
@@ -231,26 +215,26 @@ function ResultView({ result, onRestart }: { result: QuoteResult; onRestart: () 
 
         <div className="rounded-xl border border-fosa-200 bg-fosa-50/60 p-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-fosa-700">
-            Estimation indicative
+            {t.quote.result.estimateLabel}
           </p>
           <p className="mt-2 text-[17px] font-bold text-navy-900">{result.estimated_range}</p>
-          <p className="mt-3 text-[12.5px] leading-snug text-ink">Avant analyse détaillée.</p>
+          <p className="mt-3 text-[12.5px] leading-snug text-ink">{t.quote.result.estimateNote}</p>
         </div>
 
         <div className="rounded-xl border border-line bg-white p-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-fosa-700">
-            Délai estimatif
+            {t.quote.result.timelineLabel}
           </p>
           <p className="mt-2 text-[15px] font-semibold text-navy-900">
             {result.estimated_timeline}
           </p>
-          <p className="mt-3 text-[12.5px] leading-snug text-ink">Selon le périmètre retenu.</p>
+          <p className="mt-3 text-[12.5px] leading-snug text-ink">{t.quote.result.timelineNote}</p>
         </div>
       </div>
 
       <div className="mt-4 rounded-xl border border-line bg-white p-5">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-fosa-700">
-          Fonctionnalités recommandées
+          {t.quote.result.featuresLabel}
         </p>
         <ul className="mt-3 flex flex-wrap gap-2">
           {result.recommended_features.map((feature) => (
@@ -266,7 +250,7 @@ function ResultView({ result, onRestart }: { result: QuoteResult; onRestart: () 
 
       <div className="mt-4 rounded-xl border border-line bg-white p-5">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-fosa-700">
-          Prochaines étapes
+          {t.quote.result.nextStepsLabel}
         </p>
         <ol className="mt-3 flex flex-col gap-2.5">
           {result.next_steps.map((step, i) => (
@@ -282,19 +266,19 @@ function ResultView({ result, onRestart }: { result: QuoteResult; onRestart: () 
 
       <p className="mt-4 flex items-start gap-2.5 rounded-lg border border-line bg-surface p-4 text-[13.5px] leading-relaxed text-ink">
         <Diamond className="mt-1 size-2 shrink-0 text-fosa-500" />
-        {QUOTE_LEGAL_NOTE}
+        {t.quote.result.legalNote}
       </p>
 
       <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button href="#rendez-vous" variant="primary" size="lg">
-          Discuter de mon projet
+          {t.quote.result.cta}
         </Button>
         <button
           type="button"
           onClick={onRestart}
           className="inline-flex items-center justify-center gap-2 rounded-[10px] border border-[#d4dae3] bg-white px-7 py-3.5 text-base font-semibold text-navy-900 transition-colors duration-200 hover:border-navy-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fosa-500"
         >
-          Recommencer
+          {t.quote.result.restart}
         </button>
       </div>
     </div>
@@ -308,10 +292,11 @@ function ResultView({ result, onRestart }: { result: QuoteResult; onRestart: () 
  * L'estimation est indicative — jamais présentée comme un devis définitif.
  */
 export default function AIQuoteSection() {
+  const t = useT()
   const [step, setStep] = useState(0)
   const [draft, setDraft] = useState<Draft>(INITIAL_DRAFT)
   const [status, setStatus] = useState<Status>('form')
-  const [error, setError] = useState<string | null>(null)
+  const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loadingStep, setLoadingStep] = useState(0)
   const [result, setResult] = useState<QuoteResult | null>(null)
 
@@ -319,11 +304,14 @@ export default function AIQuoteSection() {
   useEffect(() => {
     if (status !== 'loading') return
     const id = window.setInterval(
-      () => setLoadingStep((current) => Math.min(current + 1, ANALYSIS_STEPS.length - 1)),
+      () =>
+        setLoadingStep((current) =>
+          Math.min(current + 1, Math.max(0, t.quote.loading.steps.length - 1)),
+        ),
       850,
     )
     return () => window.clearInterval(id)
-  }, [status])
+  }, [status, t.quote.loading.steps.length])
 
   const runAnalysis = async () => {
     setStatus('loading')
@@ -338,7 +326,7 @@ export default function AIQuoteSection() {
         deadline: draft.deadline!,
         budget: draft.budget,
       }
-      const quote = await generateQuote(input)
+      const quote = await generateQuote(input, t.quote)
       setResult(quote)
       setStatus('result')
     } catch {
@@ -347,13 +335,19 @@ export default function AIQuoteSection() {
   }
 
   const handleNext = () => {
-    const message = validateStep(step, draft)
-    if (message) {
-      setError(message)
+    const invalid = validateStep(step, draft, DESCRIPTION_MIN_LENGTH)
+    if (invalid) {
+      const messages = {
+        type: t.quote.validation.type,
+        description: t.quote.validation.description.replace('{min}', String(DESCRIPTION_MIN_LENGTH)),
+        size: t.quote.validation.size,
+        deadline: t.quote.validation.deadline,
+      } as const
+      setErrorKey(messages[invalid as keyof typeof messages])
       return
     }
-    setError(null)
-    if (step < STEPS.length - 1) {
+    setErrorKey(null)
+    if (step < t.quote.steps.length - 1) {
       setStep((current) => current + 1)
     } else {
       void runAnalysis()
@@ -361,28 +355,33 @@ export default function AIQuoteSection() {
   }
 
   const handleBack = () => {
-    setError(null)
+    setErrorKey(null)
     setStep((current) => Math.max(0, current - 1))
   }
 
   const handleRestart = () => {
     setDraft(INITIAL_DRAFT)
     setStep(0)
-    setError(null)
+    setErrorKey(null)
     setResult(null)
     setStatus('form')
   }
 
-  const progress = status === 'form' ? ((step + 1) / STEPS.length) * 100 : 100
-  const stepLabel = status === 'form' ? `Étape ${step + 1} sur ${STEPS.length}` : 'Analyse'
+  const progress = status === 'form' ? ((step + 1) / t.quote.steps.length) * 100 : 100
+  const stepLabel =
+    status === 'form'
+      ? t.quote.stepCounter
+          .replace('{current}', String(step + 1))
+          .replace('{total}', String(t.quote.steps.length))
+      : t.quote.loading.title
 
   return (
     <section id="devis" className="bg-surface py-20 lg:py-28" aria-labelledby="quote-title">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-8">
         <SectionHeading
-          overline="Devis intelligent"
-          title="Estimez votre projet avec notre assistant."
-          subtitle="Décrivez votre besoin en quelques étapes et obtenez une première estimation indicative en moins d’une minute."
+          overline={t.quote.overline}
+          title={t.quote.title}
+          subtitle={t.quote.subtitle}
         />
 
         <Reveal delay={120} className="mx-auto mt-14 max-w-3xl">
@@ -392,7 +391,7 @@ export default function AIQuoteSection() {
               <div className="flex items-center justify-between gap-4">
                 <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-fosa-700">
                   <Diamond />
-                  Assistant estimation
+                  {t.quote.panelLabel}
                 </p>
                 <p className="text-[13px] font-medium text-ink">{stepLabel}</p>
               </div>
@@ -400,9 +399,9 @@ export default function AIQuoteSection() {
                 className="mt-3 h-1 overflow-hidden rounded-full bg-line"
                 role="progressbar"
                 aria-valuemin={1}
-                aria-valuemax={STEPS.length}
-                aria-valuenow={status === 'form' ? step + 1 : STEPS.length}
-                aria-label="Progression du formulaire"
+                aria-valuemax={t.quote.steps.length}
+                aria-valuenow={status === 'form' ? step + 1 : t.quote.steps.length}
+                aria-label={t.quote.progressAria}
               >
                 <div
                   className="h-full rounded-full bg-fosa-500 transition-all duration-300 motion-reduce:transition-none"
@@ -427,31 +426,21 @@ export default function AIQuoteSection() {
                   }}
                 >
                   <h3 className="text-xl font-semibold tracking-[-0.01em] text-navy-900 sm:text-[22px]">
-                    {STEPS[step].question}
+                    {t.quote.steps[step].question}
                   </h3>
 
-                  {step === 0 ? (
-                    <p className="mt-1.5 text-[13.5px] text-ink">
-                      Choisissez l’option la plus proche de votre besoin.
-                    </p>
-                  ) : null}
+                  {step === 0 ? <p className="mt-1.5 text-[13.5px] text-ink">{t.quote.hints.type}</p> : null}
                   {step === 1 ? (
-                    <p className="mt-1.5 text-[13.5px] text-ink">
-                      Quelques phrases suffisent : contexte, objectif, fonctionnalités attendues.
-                    </p>
+                    <p className="mt-1.5 text-[13.5px] text-ink">{t.quote.hints.description}</p>
                   ) : null}
-                  {step === 4 ? (
-                    <p className="mt-1.5 text-[13.5px] text-ink">
-                      Facultatif — cette réponse affine l’estimation, sans être obligatoire.
-                    </p>
-                  ) : null}
+                  {step === 4 ? <p className="mt-1.5 text-[13.5px] text-ink">{t.quote.hints.budget}</p> : null}
 
                   <div className="mt-6">
                     {step === 0 ? (
                       <fieldset>
-                        <legend className="sr-only">{STEPS[0].question}</legend>
+                        <legend className="sr-only">{t.quote.steps[0].question}</legend>
                         <div className="grid gap-3 sm:grid-cols-2">
-                          {SOLUTION_OPTIONS.map((option) => (
+                          {t.quote.options.solutions.map((option) => (
                             <OptionCard
                               key={option.value}
                               name="quote-type"
@@ -469,7 +458,7 @@ export default function AIQuoteSection() {
                     {step === 1 ? (
                       <div>
                         <label htmlFor="quote-description" className="sr-only">
-                          {STEPS[1].question}
+                          {t.quote.steps[1].question}
                         </label>
                         <textarea
                           id="quote-description"
@@ -479,20 +468,20 @@ export default function AIQuoteSection() {
                           }
                           rows={6}
                           maxLength={600}
-                          placeholder="Ex. : nous sommes une PME de distribution et nous cherchons un outil pour suivre nos stocks, nos ventes et nos factures…"
+                          placeholder={t.quote.descriptionPlaceholder}
                           className="w-full resize-y rounded-xl border border-line bg-white px-4 py-3.5 text-[15px] leading-relaxed text-navy-900 placeholder:text-[#9aa3b2] transition-colors duration-200 focus:border-fosa-500 focus:outline-none focus:ring-2 focus:ring-fosa-500/25"
                         />
                         <p className="mt-1.5 text-right text-[12.5px] text-ink">
-                          {draft.description.length} / 600
+                          {t.quote.descriptionCounter.replace('{count}', String(draft.description.length))}
                         </p>
                       </div>
                     ) : null}
 
                     {step === 2 ? (
                       <fieldset>
-                        <legend className="sr-only">{STEPS[2].question}</legend>
+                        <legend className="sr-only">{t.quote.steps[2].question}</legend>
                         <div className="grid gap-3 sm:grid-cols-2">
-                          {SIZE_OPTIONS.map((option) => (
+                          {t.quote.options.sizes.map((option) => (
                             <OptionCard
                               key={option.value}
                               name="quote-size"
@@ -509,9 +498,9 @@ export default function AIQuoteSection() {
 
                     {step === 3 ? (
                       <fieldset>
-                        <legend className="sr-only">{STEPS[3].question}</legend>
+                        <legend className="sr-only">{t.quote.steps[3].question}</legend>
                         <div className="grid gap-3 sm:grid-cols-2">
-                          {DEADLINE_OPTIONS.map((option) => (
+                          {t.quote.options.deadlines.map((option) => (
                             <OptionCard
                               key={option.value}
                               name="quote-deadline"
@@ -531,9 +520,9 @@ export default function AIQuoteSection() {
 
                     {step === 4 ? (
                       <fieldset>
-                        <legend className="sr-only">{STEPS[4].question}</legend>
+                        <legend className="sr-only">{t.quote.steps[4].question}</legend>
                         <div className="grid gap-3 sm:grid-cols-2">
-                          {BUDGET_OPTIONS.map((option) => (
+                          {t.quote.options.budgets.map((option) => (
                             <OptionCard
                               key={option.value}
                               name="quote-budget"
@@ -552,9 +541,9 @@ export default function AIQuoteSection() {
                     ) : null}
                   </div>
 
-                  {error ? (
+                  {errorKey ? (
                     <p role="alert" className="mt-5 text-[13.5px] font-medium text-[#b42318]">
-                      {error}
+                      {errorKey}
                     </p>
                   ) : null}
 
@@ -567,13 +556,13 @@ export default function AIQuoteSection() {
                       }`}
                     >
                       <BackIcon />
-                      Précédent
+                      {t.quote.buttons.back}
                     </button>
                     <button
                       type="submit"
                       className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-fosa-500 px-6 py-3 text-[15px] font-semibold text-navy-900 transition-colors duration-200 hover:bg-fosa-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fosa-500"
                     >
-                      {step === STEPS.length - 1 ? 'Obtenir mon estimation' : 'Continuer'}
+                      {step === t.quote.steps.length - 1 ? t.quote.buttons.submit : t.quote.buttons.next}
                     </button>
                   </div>
                 </form>
@@ -582,8 +571,7 @@ export default function AIQuoteSection() {
           </div>
 
           <p className="mx-auto mt-4 max-w-xl text-center text-[13px] leading-relaxed text-ink">
-            Assistant d’estimation préliminaire — il ne remplace pas un devis commercial détaillé,
-            établi avec notre équipe.
+            {t.quote.undernote}
           </p>
         </Reveal>
       </div>

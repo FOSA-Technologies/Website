@@ -1,13 +1,7 @@
 import Reveal from '../components/Reveal'
 import DashboardMockup from '../components/DashboardMockup'
 import SectionHeading, { Diamond } from '../components/SectionHeading'
-
-const ANNOTATIONS = [
-  'Données en temps réel',
-  'Gestion centralisée',
-  'Accessible partout',
-  'Sécurité avancée',
-] as const
+import { useT } from '../i18n/LanguageContext'
 
 function Chip({ label }: { label: string }) {
   return (
@@ -20,6 +14,9 @@ function Chip({ label }: { label: string }) {
 
 /** Showcase immersif : le mockup FOSA mis en scène avec des annotations sobres. */
 export default function ProductShowcase() {
+  const t = useT()
+  const annotations = t.showcase.annotations
+
   return (
     <section className="relative overflow-hidden bg-navy-900 py-20 lg:py-28" aria-labelledby="showcase-title">
       <div
@@ -42,9 +39,9 @@ export default function ProductShowcase() {
       <div className="relative mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-8">
         <SectionHeading
           dark
-          overline="La plateforme"
-          title="Toutes vos opérations. Une vision claire."
-          subtitle="Un tableau de bord pensé pour piloter votre activité d’un seul regard — où que vous soyez."
+          overline={t.showcase.overline}
+          title={t.showcase.title}
+          subtitle={t.showcase.subtitle}
         />
 
         <Reveal delay={120} className="relative mx-auto mt-16 max-w-5xl">
@@ -53,22 +50,22 @@ export default function ProductShowcase() {
 
           {/* Annotations épinglées sur les bords du cadre (desktop large uniquement) */}
           <div className="absolute -top-5 left-6 hidden xl:flex">
-            <Chip label={ANNOTATIONS[0]} />
+            <Chip label={annotations[0]} />
           </div>
           <div className="absolute -bottom-5 left-6 hidden xl:flex">
-            <Chip label={ANNOTATIONS[1]} />
+            <Chip label={annotations[1]} />
           </div>
           <div className="absolute -top-5 right-6 hidden xl:flex">
-            <Chip label={ANNOTATIONS[2]} />
+            <Chip label={annotations[2]} />
           </div>
           <div className="absolute -bottom-5 right-44 hidden xl:flex">
-            <Chip label={ANNOTATIONS[3]} />
+            <Chip label={annotations[3]} />
           </div>
         </Reveal>
 
         {/* Version compacte des annotations (mobile / tablette) */}
         <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 xl:hidden">
-          {ANNOTATIONS.map((label, i) => (
+          {annotations.map((label, i) => (
             <Reveal key={label} delay={i * 60}>
               <Chip label={label} />
             </Reveal>

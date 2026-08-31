@@ -26,6 +26,12 @@ export interface Product {
   description: string
   features: string[]
   status: ProductStatus
+  /** Variante anglaise des champs textuels (le nom de marque reste identique). */
+  en?: {
+    category?: string
+    description?: string
+    features?: string[]
+  }
   /** Illustration géométrique FOSA de l'aperçu (utilisée quand `image` est absente). */
   illustration?: 'gestion' | 'crm' | 'automation'
   /** URL de la page produit (interne ou externe). Optionnelle : le bouton n'apparaît que si elle existe. */
@@ -60,6 +66,12 @@ export const PRODUCTS: Product[] = [
     description:
       'Pilotez vos opérations quotidiennes depuis une interface unique : ventes, stocks et facturation.',
     features: ['Suivi des stocks', 'Devis & facturation', 'Tableaux de bord', 'Multi-utilisateurs'],
+    en: {
+      category: 'Business management',
+      description:
+        'Run your day-to-day operations from a single interface: sales, inventory and invoicing.',
+      features: ['Inventory tracking', 'Quotes & invoicing', 'Dashboards', 'Multi-user'],
+    },
     status: 'Disponible',
     illustration: 'gestion',
     demoUrl: demoUrlFor('FOSA Gestion', 'Gestion d’entreprise', [
@@ -74,6 +86,12 @@ export const PRODUCTS: Product[] = [
     description:
       'Suivez vos contacts, vos échanges et vos opportunités sans jamais perdre une information.',
     features: ['Fiches contacts', 'Pipeline des ventes', 'Relances automatiques', 'Rapports de vente'],
+    en: {
+      category: 'Customer relationship',
+      description:
+        'Track your contacts, conversations and opportunities without ever losing information.',
+      features: ['Contact records', 'Sales pipeline', 'Automated follow-ups', 'Sales reports'],
+    },
     status: 'En développement',
     illustration: 'crm',
     demoUrl: demoUrlFor('FOSA CRM', 'Relation client', [
@@ -88,6 +106,12 @@ export const PRODUCTS: Product[] = [
     description:
       'Éliminez les tâches répétitives grâce à des flux de travail configurables, connectés à vos outils.',
     features: ['Connecteurs', 'Flux configurables', 'Planifications', 'Alertes par e-mail'],
+    en: {
+      category: 'Automation',
+      description:
+        'Eliminate repetitive tasks with configurable workflows connected to your tools.',
+      features: ['Connectors', 'Configurable workflows', 'Schedules', 'Email alerts'],
+    },
     status: 'Bientôt disponible',
     illustration: 'automation',
     demoUrl: demoUrlFor('FOSA Automate', 'Automatisation', [

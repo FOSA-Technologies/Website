@@ -1,3 +1,4 @@
+import { useT } from './i18n/LanguageContext'
 import Navbar from './components/Navbar'
 import Hero from './sections/Hero'
 import TrustMarquee from './sections/TrustMarquee'
@@ -16,10 +17,11 @@ import FinalCta from './sections/FinalCta'
 import Footer from './sections/Footer'
 
 export default function App() {
+  const t = useT()
   return (
     <>
       <a href="#contenu" className="skip-link">
-        Aller au contenu principal
+        {t.common.skipLink}
       </a>
       <Navbar />
       <main id="contenu">

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Button from '../Button'
 import { Diamond } from '../SectionHeading'
+import { useT } from '../../i18n/LanguageContext'
 import { BOOKING_MAILTO, CALENDLY_URL, CALENDLY_WIDGET_SCRIPT } from '../../lib/calendly'
 
 declare global {
@@ -56,6 +57,7 @@ function loadCalendlyScript(): Promise<void> {
  * est donc superposé en couche séparée, au-dessus du conteneur.
  */
 export default function CalendlyEmbed() {
+  const t = useT()
   const containerRef = useRef<HTMLDivElement>(null)
   const [status, setStatus] = useState<Status>('idle')
 
@@ -122,11 +124,10 @@ export default function CalendlyEmbed() {
               <>
                 <Diamond className="size-2.5 text-fosa-500" />
                 <p className="text-[15.5px] font-semibold text-navy-900">
-                  Le calendrier n’a pas pu être chargé.
+                  {t.booking.errorTitle}
                 </p>
                 <p className="max-w-xs text-[14px] leading-relaxed text-ink">
-                  Ouvrez-le directement dans un nouvel onglet, ou écrivez-nous pour convenir d’un
-                  créneau.
+                  {t.booking.errorText}
                 </p>
                 <div className="mt-2 flex flex-col items-center gap-2.5 sm:flex-row">
                   <Button
@@ -136,10 +137,10 @@ export default function CalendlyEmbed() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Ouvrir le calendrier
+                    {t.booking.openCalendar}
                   </Button>
                   <Button href={BOOKING_MAILTO} variant="secondary" size="md">
-                    Nous écrire
+                    {t.booking.writeUs}
                   </Button>
                 </div>
               </>
@@ -149,8 +150,8 @@ export default function CalendlyEmbed() {
                   className="size-3 animate-pulse rotate-45 bg-fosa-500/70 motion-reduce:animate-none"
                   aria-hidden="true"
                 />
-                <p className="text-[14.5px] font-medium text-navy-900">Chargement du calendrier…</p>
-                <p className="text-[13px] text-ink">Quelques secondes suffisent.</p>
+                <p className="text-[14.5px] font-medium text-navy-900">{t.booking.loading}</p>
+                <p className="text-[13px] text-ink">{t.booking.loadingNote}</p>
               </>
             )}
           </div>
@@ -159,14 +160,14 @@ export default function CalendlyEmbed() {
 
       {status === 'ready' ? (
         <p className="mt-4 text-center text-[13.5px] text-ink">
-          L’affichage est incomplet ?{' '}
+          {t.booking.incomplete}{' '}
           <a
             href={CALENDLY_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold text-fosa-700 underline underline-offset-4 transition-colors hover:text-fosa-600"
           >
-            Ouvrir le calendrier dans un nouvel onglet
+            {t.booking.openInNewTab}
           </a>
         </p>
       ) : null}

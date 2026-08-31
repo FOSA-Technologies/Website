@@ -2,7 +2,7 @@ import Button from '../components/Button'
 import Reveal from '../components/Reveal'
 import DashboardMockup from '../components/DashboardMockup'
 import { Diamond } from '../components/SectionHeading'
-import { CONTACT_MAILTO } from '../lib/content'
+import { useT } from '../i18n/LanguageContext'
 
 const ArrowIcon = () => (
   <svg
@@ -20,6 +20,8 @@ const ArrowIcon = () => (
 )
 
 export default function Hero() {
+  const t = useT()
+
   return (
     <section className="relative overflow-hidden bg-surface" aria-labelledby="hero-title">
       {/* Composition graphique : grille technique, halo, diagonales */}
@@ -46,7 +48,7 @@ export default function Hero() {
           <Reveal>
             <p className="inline-flex items-center gap-2.5 text-[12px] font-bold uppercase tracking-[0.18em] text-fosa-700">
               <Diamond />
-              Solutions digitales pour PME
+              {t.hero.overline}
             </p>
           </Reveal>
 
@@ -55,29 +57,26 @@ export default function Hero() {
               id="hero-title"
               className="mt-6 text-[clamp(2.55rem,6vw,4.1rem)] font-bold leading-[1.05] tracking-[-0.03em] text-navy-900"
             >
-              <span className="block">Digitalisez.</span>
-              <span className="block">Simplifiez.</span>
+              <span className="block">{t.hero.titleTop}</span>
+              <span className="block">{t.hero.titleMiddle}</span>
               <span className="block">
-                <span className="text-fosa-600">Propulsez</span> votre entreprise.
+                <span className="text-fosa-600">{t.hero.titleAccent}</span> {t.hero.titleEnd}
               </span>
             </h1>
           </Reveal>
 
           <Reveal delay={160}>
-            <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-ink">
-              FOSA accompagne les PME dans leur transformation digitale avec des solutions simples,
-              puissantes et évolutives.
-            </p>
+            <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-ink">{t.hero.text}</p>
           </Reveal>
 
           <Reveal delay={240}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button href="#solutions" variant="primary" size="lg">
-                Découvrir nos solutions
+                {t.hero.ctaPrimary}
                 <ArrowIcon />
               </Button>
-              <Button href={CONTACT_MAILTO} variant="secondary" size="lg">
-                Nous contacter
+              <Button href="#devis" variant="secondary" size="lg">
+                {t.hero.ctaSecondary}
               </Button>
             </div>
           </Reveal>
@@ -85,7 +84,7 @@ export default function Hero() {
           <Reveal delay={320}>
             <p className="mt-7 flex items-center gap-2.5 text-[14.5px] text-[#5b6577]">
               <Diamond className="size-2 shrink-0 text-fosa-500" />
-              Des outils conçus pour simplifier votre quotidien et accélérer votre croissance.
+              {t.hero.note}
             </p>
           </Reveal>
         </div>

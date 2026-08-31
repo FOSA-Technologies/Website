@@ -1,25 +1,10 @@
 import Reveal from '../components/Reveal'
-
-const BLOCKS = [
-  {
-    number: '01',
-    title: 'Simplifiez',
-    description: 'Centralisez vos opérations et réduisez les tâches inutiles.',
-  },
-  {
-    number: '02',
-    title: 'Pilotez',
-    description: 'Visualisez vos données et prenez de meilleures décisions.',
-  },
-  {
-    number: '03',
-    title: 'Développez',
-    description: 'Des solutions évolutives qui grandissent avec votre entreprise.',
-  },
-] as const
+import { useT } from '../i18n/LanguageContext'
 
 /** Section Problème / Promesse : contraste fort sur fond navy. */
 export default function Problem() {
+  const t = useT()
+
   return (
     <section className="relative overflow-hidden bg-navy-900 py-20 lg:py-28" aria-labelledby="problem-title">
       {/* Composition géométrique discrète */}
@@ -44,23 +29,19 @@ export default function Problem() {
               id="problem-title"
               className="max-w-xl text-3xl font-bold leading-[1.15] tracking-[-0.02em] text-white text-balance sm:text-4xl lg:text-[2.7rem]"
             >
-              Votre entreprise <span className="text-fosa-400">mérite mieux</span> que des outils
-              compliqués.
+              {t.problem.titleA} <span className="text-fosa-400">{t.problem.titleAccent}</span>{' '}
+              {t.problem.titleB}
             </h2>
           </Reveal>
           <Reveal delay={120}>
             <p className="max-w-lg text-[17px] leading-relaxed text-white/65 lg:justify-self-end">
-              <span className="font-medium text-white">
-                Trop d’outils, trop de tâches manuelles, trop de données dispersées.
-              </span>{' '}
-              FOSA rassemble l’essentiel pour vous permettre de vous concentrer sur ce qui compte
-              vraiment : votre entreprise.
+              <span className="font-medium text-white">{t.problem.textBold}</span> {t.problem.text}
             </p>
           </Reveal>
         </div>
 
         <div className="mt-16 grid gap-5 md:grid-cols-3">
-          {BLOCKS.map((block, i) => (
+          {t.problem.blocks.map((block, i) => (
             <Reveal key={block.number} delay={i * 90}>
               <article className="cut-corner-sm h-full border border-white/[0.07] bg-white/[0.03] p-7 sm:p-8">
                 <p className="text-[15px] font-bold tracking-[0.14em] text-fosa-400">
