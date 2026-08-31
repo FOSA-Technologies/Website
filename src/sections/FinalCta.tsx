@@ -1,12 +1,12 @@
 import Button from '../components/Button'
 import Reveal from '../components/Reveal'
-import { CONTACT_MAILTO, WHATSAPP_URL } from '../lib/content'
+import { WHATSAPP_URL } from '../lib/content'
 
 function WhatsAppIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
-      className="size-5 shrink-0 text-[#25d366]"
+      className="size-[15px] shrink-0"
       fill="currentColor"
       aria-hidden="true"
       focusable="false"
@@ -16,10 +16,22 @@ function WhatsAppIcon() {
   )
 }
 
-/** CTA final : fond orange avec composition géométrique inspirée du renard. */
+/** CTA final : fond orange, composition géométrique renard FOSA. */
 export default function FinalCta() {
   return (
     <section id="contact" className="relative overflow-hidden bg-fosa-500 py-20 lg:py-28" aria-labelledby="cta-title">
+      {/* Renard géométrique en filigrane : blanc absorbé par le fond orange */}
+      <img
+        src="/assets/fosa-logo.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        width={957}
+        height={1018}
+        draggable={false}
+        className="pointer-events-none absolute -bottom-28 -right-20 w-[300px] select-none opacity-[0.14] mix-blend-multiply sm:w-[380px] lg:-right-10"
+      />
+
       {/* Composition angulaire navy */}
       <div
         className="absolute -right-32 -top-40 size-[440px] rotate-[18deg] border-2 border-navy-900/[0.08]"
@@ -46,33 +58,35 @@ export default function FinalCta() {
             id="cta-title"
             className="text-3xl font-bold leading-[1.1] tracking-[-0.02em] text-navy-900 text-balance sm:text-4xl lg:text-[2.9rem]"
           >
-            Prêt à faire évoluer votre entreprise ?
+            Votre projet mérite une solution adaptée.
           </h2>
         </Reveal>
         <Reveal delay={100}>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-navy-900/75">
-            Parlons de vos besoins et construisons ensemble une solution adaptée à votre activité.
+            Décrivez-nous votre besoin, obtenez une première estimation et échangez avec notre
+            équipe.
           </p>
         </Reveal>
         <Reveal delay={200}>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button href={CONTACT_MAILTO} variant="navyOnOrange" size="lg">
-              Démarrer avec FOSA
+            <Button href="#devis" variant="navyOnOrange" size="lg">
+              Obtenir une estimation
             </Button>
-            <Button
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="whiteOnOrange"
-              size="lg"
-            >
-              <WhatsAppIcon />
-              <span>Discuter sur WhatsApp</span>
-            </Button>
-            <Button href={CONTACT_MAILTO} variant="outlineOnOrange" size="lg">
-              Nous contacter
+            <Button href="#rendez-vous" variant="whiteOnOrange" size="lg">
+              Prendre rendez-vous
             </Button>
           </div>
+        </Reveal>
+        <Reveal delay={300}>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-7 inline-flex items-center gap-2 text-[14.5px] font-medium text-navy-900/70 underline-offset-4 transition-colors hover:text-navy-900 hover:underline"
+          >
+            <WhatsAppIcon />
+            Ou discutez directement avec nous sur WhatsApp
+          </a>
         </Reveal>
       </div>
     </section>

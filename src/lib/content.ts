@@ -13,6 +13,7 @@ export const WHATSAPP_URL =
 
 export const NAV_LINKS = [
   { label: 'Solutions', href: '#solutions' },
+  { label: 'Produits', href: '#produits' },
   { label: 'Secteurs', href: '#secteurs' },
   { label: 'Fonctionnalités', href: '#fonctionnalites' },
   { label: 'À propos', href: '#apropos' },

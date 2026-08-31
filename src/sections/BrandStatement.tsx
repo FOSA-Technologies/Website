@@ -1,5 +1,6 @@
 import Reveal from '../components/Reveal'
 import { Diamond } from '../components/SectionHeading'
+import YouTubeEmbed from '../components/YouTubeEmbed'
 
 const TAGLINE = ['Intelligent.', 'Stratégique.', 'Visionnaire.'] as const
 
@@ -62,6 +63,13 @@ export default function BrandStatement() {
               </li>
             ))}
           </ul>
+        </Reveal>
+
+        {/* Vidéo de présentation : facade légère, chargée uniquement au clic */}
+        <Reveal delay={340}>
+          <div className="mx-auto mt-14 max-w-3xl">
+            <YouTubeEmbed />
+          </div>
         </Reveal>
       </div>
     </section>

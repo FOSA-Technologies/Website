@@ -4,6 +4,9 @@
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
 
+  /* Wordmark robotique (Orbitron) */
+  --font-robot: 'Orbitron Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+
   /* Orange FOSA */
   --color-fosa-50: #fff5ed;
   --color-fosa-100: #ffe7d3;
@@ -118,6 +121,36 @@ body {
   }
 }
 
+/* ————— Marquee « secteurs » : défilement lent, pause au survol ————— */
+@keyframes fosa-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: fosa-marquee 48s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
 /* ————— Apparition au scroll ————— */
 .reveal {
   opacity: 0;
@@ -138,5 +171,79 @@ body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* ————— Wordmark robotique (Logo) ————— */
+.robofosa-ghost {
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, clip-path;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .robofosa-cursor {
+    animation: robofosa-blink 1.15s steps(1, end) infinite;
+  }
+
+  .robofosa-ghost-a {
+    animation: robofosa-slice-a 0.35s steps(1, end) infinite;
+  }
+
+  .robofosa-ghost-b {
+    animation: robofosa-slice-b 0.35s steps(1, end) infinite;
+  }
+}
+
+@keyframes robofosa-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Bandes horizontales qui sautent : effet « transmission corrompue ». */
+@keyframes robofosa-slice-a {
+  0% {
+    clip-path: inset(0 0 78% 0);
+    transform: translate(-1.5px, 0);
+  }
+  25% {
+    clip-path: inset(16% 0 64% 0);
+    transform: translate(1.5px, 0);
+  }
+  50% {
+    clip-path: inset(56% 0 24% 0);
+    transform: translate(-1px, 0.5px);
+  }
+  75% {
+    clip-path: inset(32% 0 50% 0);
+    transform: translate(1.5px, -0.5px);
+  }
+  100% {
+    clip-path: inset(76% 0 6% 0);
+    transform: translate(-1.5px, 0);
+  }
+}
+
+@keyframes robofosa-slice-b {
+  0% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(1.5px, 0);
+  }
+  25% {
+    clip-path: inset(76% 0 6% 0);
+    transform: translate(-1.5px, 0.5px);
+  }
+  50% {
+    clip-path: inset(6% 0 76% 0);
+    transform: translate(1px, -0.5px);
+  }
+  75% {
+    clip-path: inset(40% 0 42% 0);
+    transform: translate(-1.5px, 0);
+  }
+  100% {
+    clip-path: inset(18% 0 62% 0);
+    transform: translate(1.5px, 0);
   }
 }

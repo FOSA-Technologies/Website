@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Démo — FOSA</title>
+    <style>
+      :root {
+        --navy: #0b1424;
+        --navy-2: #162033;
+        --orange: #ff5a00;
+        --orange-soft: #fff5ed;
+        --surface: #f6f7f9;
+        --ink: #4b5563;
+        --line: #e6e9ef;
+        --white: #ffffff;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        background: var(--surface);
+        color: var(--navy);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Barre supérieure */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 24px;
+        background: var(--navy);
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--white);
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: -0.01em;
+        text-decoration: none;
+      }
+      .diamond {
+        width: 10px;
+        height: 10px;
+        background: var(--orange);
+        transform: rotate(45deg);
+        flex-shrink: 0;
+      }
+      .diamond.sm {
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 106, 31, 0.85);
+      }
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .demo-badge {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--orange);
+        border: 1px solid rgba(255, 106, 31, 0.5);
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+      .back-link {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 13.5px;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: var(--white);
+      }
+
+      /* Bandeau d'avertissement */
+      .banner {
+        background: var(--orange);
+        color: var(--navy);
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        padding: 8px 16px;
+      }
+
+      /* Mise en page */
+      .layout {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 20px;
+        max-width: 1200px;
+        margin: 24px auto;
+        padding: 0 20px;
+      }
+      .sidebar,
+      .content {
+        min-width: 0;
+      }
+      @media (max-width: 800px) {
+        .layout {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      /* Menu latéral */
+      .sidebar {
+        background: var(--navy);
+        border-radius: 12px;
+        padding: 20px 16px;
+        height: fit-content;
+        clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+      }
+      .sidebar-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 14px;
+        padding-left: 4px;
+      }
+      .menu {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .menu-item:first-child {
+        background: rgba(255, 106, 31, 0.14);
+        color: var(--white);
+        font-weight: 600;
+      }
+
+      /* Contenu principal */
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .head {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 22px 24px;
+      }
+      .head h1 {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .head p {
+        margin-top: 6px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--orange);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      @media (max-width: 800px) {
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+      .stat {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 18px 20px;
+      }
+      .stat-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .stat-value {
+        margin-top: 8px;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .stat-value .orange {
+        color: var(--orange);
+      }
+      .stat-note {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--ink);
+      }
+
+      .panel {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 20px 24px;
+      }
+      .panel-title {
+        font-size: 15px;
+        font-weight: 700;
+      }
+      .panel-sub {
+        margin-top: 2px;
+        font-size: 12.5px;
+        color: var(--ink);
+      }
+
+      /* Graphique fictif */
+      .chart {
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+        height: 140px;
+        margin-top: 16px;
+      }
+      .chart .bar {
+        flex: 1;
+        background: var(--navy-2);
+        border-radius: 4px 4px 0 0;
+        min-height: 18px;
+      }
+      .chart .bar:nth-child(4n + 1) {
+        background: var(--orange);
+      }
+
+      /* Tableau fictif */
+      table {
+        width: 100%;
+        margin-top: 14px;
+        border-collapse: collapse;
+        font-size: 13.5px;
+      }
+      th {
+        text-align: left;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink);
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      td {
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+        color: var(--navy);
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      .pill {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 4px;
+      }
+      .pill.ok {
+        background: var(--orange-soft);
+        color: var(--orange);
+      }
+      .pill.wait {
+        background: var(--surface);
+        color: var(--ink);
+      }
+
+      .footnote {
+        font-size: 12.5px;
+        color: var(--ink);
+        text-align: center;
+        padding: 0 20px 32px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a href="/" class="brand"><span class="diamond"></span>FOSA</a>
+      <div class="topbar-right">
+        <span class="demo-badge">Démo</span>
+        <a href="/" class="back-link">← Retour au site</a>
+      </div>
+    </header>
+
+    <div class="banner">
+      Version de démonstration — interface et données fictives, uniquement pour illustrer le produit.
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <p class="sidebar-title">Menu</p>
+        <ul class="menu" id="menu"></ul>
+      </aside>
+
+      <main class="content">
+        <div class="head">
+          <h1 id="product-name">Produit FOSA</h1>
+          <p id="product-category">Catégorie</p>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <p class="stat-label">Activité ce mois</p>
+            <p class="stat-value">+24 <span class="orange">%</span></p>
+            <p class="stat-note">Exemple — donnée fictive</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Tâches terminées</p>
+            <p class="stat-value">342</p>
+            <p class="stat-note">Exemple — donnée fictive</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Temps gagné / semaine</p>
+            <p class="stat-value">6,5 h</p>
+            <p class="stat-note">Exemple — donnée fictive</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <p class="panel-title">Évolution de l’activité</p>
+          <p class="panel-sub">Aperçu fictif — les valeurs réelles dépendront de votre activité.</p>
+          <div class="chart" aria-hidden="true">
+            <div class="bar" style="height: 32%"></div>
+            <div class="bar" style="height: 48%"></div>
+            <div class="bar" style="height: 40%"></div>
+            <div class="bar" style="height: 62%"></div>
+            <div class="bar" style="height: 55%"></div>
+            <div class="bar" style="height: 78%"></div>
+            <div class="bar" style="height: 70%"></div>
+            <div class="bar" style="height: 90%"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="overflow-x: auto">
+          <p class="panel-title">Dernières opérations</p>
+          <p class="panel-sub">Exemples fictifs pour visualiser l’interface.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Référence</th>
+                <th>Libellé</th>
+                <th>Montant</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CMD-2026-0147</td>
+                <td>Commande — Client exemple A</td>
+                <td>1 250 000 Ar</td>
+                <td><span class="pill ok">Payé</span></td>
+              </tr>
+              <tr>
+                <td>CMD-2026-0148</td>
+                <td>Commande — Client exemple B</td>
+                <td>840 000 Ar</td>
+                <td><span class="pill ok">Payé</span></td>
+              </tr>
+              <tr>
+                <td>DEV-2026-0031</td>
+                <td>Devis — Prospect exemple</td>
+                <td>2 100 000 Ar</td>
+                <td><span class="pill wait">En attente</span></td>
+              </tr>
+              <tr>
+                <td>CMD-2026-0149</td>
+                <td>Commande — Client exemple C</td>
+                <td>560 000 Ar</td>
+                <td><span class="pill wait">En préparation</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <p class="footnote">
+      Cette page est une démo technique : aucune donnée réelle n’est affichée.
+    </p>
+
+    <script>
+      // Personnalise la démo selon le produit (paramètres d'URL : product, category, features).
+      const params = new URLSearchParams(location.search)
+      const product = params.get('product') || 'Produit FOSA'
+      const category = params.get('category') || ''
+      const features = (params.get('features') || '')
+        .split('|')
+        .map((f) => f.trim())
+        .filter(Boolean)
+
+      document.title = 'Démo — ' + product + ' — FOSA'
+      document.getElementById('product-name').textContent = product
+      document.getElementById('product-category').textContent = category
+
+      const menu = document.getElementById('menu')
+      const items = ['Tableau de bord', ...(features.length ? features : ['Rapports', 'Paramètres'])]
+      items.forEach(function (item) {
+        const li = document.createElement('li')
+        li.className = 'menu-item'
+        const diamond = document.createElement('span')
+        diamond.className = 'diamond sm'
+        const label = document.createElement('span')
+        label.textContent = item
+        li.appendChild(diamond)
+        li.appendChild(label)
+        menu.appendChild(li)
+      })
+    </script>
+  </body>
+</html>
