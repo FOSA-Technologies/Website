@@ -158,6 +158,36 @@ export interface Dict {
     next: string
     pagination: string
     goTo: string
+    formTitle: string
+    formText: string
+    nameLabel: string
+    namePlaceholder: string
+    roleLabel: string
+    rolePlaceholder: string
+    companyLabel: string
+    companyPlaceholder: string
+    emailLabel: string
+    emailPlaceholder: string
+    ratingLabel: string
+    ratingValue: (value: number) => string
+    quoteLabel: string
+    quotePlaceholder: string
+    quoteCounter: string
+    submit: string
+    submitting: string
+    invalidName: string
+    invalidEmail: string
+    invalidEmailDomain: string
+    invalidRating: string
+    invalidQuote: string
+    genericError: string
+    successTitle: string
+    successText: string
+    alreadyTitle: string
+    alreadyText: string
+    privacy: string
+    optional: string
+    loading: string
   }
   brand: {
     overline: string
@@ -494,6 +524,39 @@ export const fr = {
     next: 'Témoignage suivant',
     pagination: 'Pagination des témoignages',
     goTo: 'Aller aux témoignages',
+    formTitle: 'Partagez votre expérience',
+    formText:
+      'Un client satisfait est notre meilleure carte de visite. Racontez-nous votre projet en quelques lignes.',
+    nameLabel: 'Nom',
+    namePlaceholder: 'Votre nom',
+    roleLabel: 'Poste',
+    rolePlaceholder: 'Ex. : Directrice générale',
+    companyLabel: 'Entreprise',
+    companyPlaceholder: 'Ex. : Entreprise SARL',
+    emailLabel: 'E-mail',
+    emailPlaceholder: 'vous@entreprise.com',
+    ratingLabel: 'Votre note',
+    ratingValue: (value) => `${value} étoile${value > 1 ? 's' : ''} sur 5`,
+    quoteLabel: 'Votre témoignage',
+    quotePlaceholder: 'Comment FOSA a-t-il accompagné votre projet ?',
+    quoteCounter: '{count} / 1000',
+    submit: 'Envoyer mon témoignage',
+    submitting: 'Envoi en cours…',
+    invalidName: 'Indiquez votre nom (2 caractères minimum).',
+    invalidEmail: 'Entrez une adresse e-mail valide.',
+    invalidEmailDomain:
+      'Cette adresse e-mail semble temporaire ou inexistante. Utilisez une adresse réelle.',
+    invalidRating: 'Choisissez une note entre 1 et 5 étoiles.',
+    invalidQuote: 'Écrivez un témoignage d’au moins 10 caractères.',
+    genericError: 'Une erreur est survenue. Réessayez dans un instant.',
+    successTitle: 'Merci !',
+    successText: 'Votre témoignage a bien été reçu. Merci pour votre retour !',
+    alreadyTitle: 'Déjà reçu',
+    alreadyText: 'Un témoignage a déjà été envoyé depuis cette adresse. Merci !',
+    privacy:
+      'Votre adresse e-mail sert uniquement à éviter les doublons. Elle n’est jamais publiée.',
+    optional: 'Optionnel',
+    loading: 'Chargement des témoignages…',
   },
   brand: {
     overline: 'Notre vision',
@@ -840,6 +903,36 @@ export const en: Dict = {
     next: 'Next testimonial',
     pagination: 'Testimonials pagination',
     goTo: 'Go to testimonials',
+    formTitle: 'Share your experience',
+    formText: 'A satisfied client is our best business card. Tell us about your project in a few lines.',
+    nameLabel: 'Name',
+    namePlaceholder: 'Your name',
+    roleLabel: 'Role',
+    rolePlaceholder: 'E.g. CEO',
+    companyLabel: 'Company',
+    companyPlaceholder: 'E.g. Company Ltd',
+    emailLabel: 'Email',
+    emailPlaceholder: 'you@company.com',
+    ratingLabel: 'Your rating',
+    ratingValue: (value) => `${value} star${value > 1 ? 's' : ''} out of 5`,
+    quoteLabel: 'Your testimonial',
+    quotePlaceholder: 'How did FOSA help with your project?',
+    quoteCounter: '{count} / 1000',
+    submit: 'Send my testimonial',
+    submitting: 'Sending…',
+    invalidName: 'Enter your name (at least 2 characters).',
+    invalidEmail: 'Enter a valid email address.',
+    invalidEmailDomain: 'This email address seems temporary or non-existent. Use a real address.',
+    invalidRating: 'Choose a rating between 1 and 5 stars.',
+    invalidQuote: 'Write a testimonial of at least 10 characters.',
+    genericError: 'Something went wrong. Try again in a moment.',
+    successTitle: 'Thank you!',
+    successText: 'Your testimonial has been received. Thank you for your feedback!',
+    alreadyTitle: 'Already submitted',
+    alreadyText: 'A testimonial has already been submitted from this address. Thank you!',
+    privacy: 'Your email address is only used to prevent duplicates. It is never published.',
+    optional: 'Optional',
+    loading: 'Loading testimonials…',
   },
   brand: {
     overline: 'Our vision',

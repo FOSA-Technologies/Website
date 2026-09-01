@@ -1,4 +1,5 @@
 import type { Testimonial } from '../../data/testimonials'
+import { StarIcon } from './StarRating'
 
 /** Initiales du client, affichées quand aucune photo n'est fournie. */
 function initials(name: string): string {
@@ -33,6 +34,8 @@ function Avatar({ testimonial }: { testimonial: Testimonial }) {
 
 /** Citation client : sobre, avec la marque géométrique FOSA. */
 export default function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  const rating = testimonial.rating
+
   return (
     <figure className="flex h-full flex-col rounded-xl border border-line bg-white p-7 transition-all duration-300 hover:border-fosa-300 hover:shadow-card">
       <svg
@@ -44,7 +47,17 @@ export default function TestimonialCard({ testimonial }: { testimonial: Testimon
       >
         <path d="M5.5 6.5h5.5v6.5H7.2c-.1 2.3 1.5 4 3.6 4.4v2.1c-3.6-.5-6.3-3.2-6.3-6.9zM13 6.5h5.5V13h-3.8c-.1 2.3 1.5 4 3.6 4.4v2.1c-3.6-.5-6.3-3.2-6.3-6.9z" />
       </svg>
-      <blockquote className="mt-3 text-[15px] leading-relaxed text-navy-900/85">
+      {rating ? (
+        <div className="mt-3 flex items-center gap-0.5" aria-label={`${rating}/5`}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <StarIcon
+              key={star}
+              className={`size-4 ${star <= rating ? 'text-fosa-500' : 'text-[#c6cdd8]'}`}
+            />
+          ))}
+        </div>
+      ) : null}
+      <blockquote className="mt-2.5 text-[15px] leading-relaxed text-navy-900/85">
         {testimonial.quote}
       </blockquote>
       <figcaption className="mt-6 flex items-center gap-3.5 border-t border-line/70 pt-5">

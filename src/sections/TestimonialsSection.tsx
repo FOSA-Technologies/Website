@@ -2,8 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 import Reveal from '../components/Reveal'
 import SectionHeading, { Diamond } from '../components/SectionHeading'
 import TestimonialCard from '../components/testimonials/TestimonialCard'
+import TestimonialForm from '../components/testimonials/TestimonialForm'
 import { useT } from '../i18n/LanguageContext'
-import { TESTIMONIALS } from '../data/testimonials'
+import { TESTIMONIALS, type Testimonial } from '../data/testimonials'
+import { TESTIMONIALS_ENDPOINT, fetchTestimonials } from '../lib/testimonials'
 
 /** Nombre de témoignages visibles selon le breakpoint. */
 function usePerView(): number {
@@ -55,13 +57,13 @@ const NextIcon = () => (
   </svg>
 )
 
-function Carousel() {
+function Carousel({ items }: { items: Testimonial[] }) {
   const t = useT()
   const perView = usePerView()
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
 
-  const maxIndex = Math.max(0, TESTIMONIALS.length - perView)
+  const maxIndex = Math.max(0, items.length - perView)
   const safeIndex = Math.min(index, maxIndex)
 
   const goNext = useCallback(() => {
@@ -80,11 +82,11 @@ function Carousel() {
     return () => window.clearInterval(id)
   }, [paused, maxIndex, goNext])
 
-  if (TESTIMONIALS.length <= perView) {
+  if (items.length <= perView) {
     return (
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {TESTIMONIALS.map((testimonial, i) => (
-          <Reveal key={testimonial.name} delay={(i % 3) * 70}>
+        {items.map((testimonial, i) => (
+          <Reveal key={i} delay={(i % 3) * 70}>
             <TestimonialCard testimonial={testimonial} />
           </Reveal>
         ))}
@@ -108,9 +110,9 @@ function Carousel() {
           className="flex transition-transform duration-300 motion-reduce:transition-none"
           style={{ transform: `translateX(-${safeIndex * (100 / perView)}%)` }}
         >
-          {TESTIMONIALS.map((testimonial) => (
+          {items.map((testimonial, i) => (
             <div
-              key={testimonial.name}
+              key={i}
               className="w-full shrink-0 px-2.5 sm:w-1/2 lg:w-1/3"
               aria-label={
                 maxIndex > 0
@@ -168,13 +170,65 @@ function Carousel() {
   )
 }
 
+/** Squelette de chargement : mêmes proportions que les cartes, pas de saut de mise en page. */
+function Skeleton() {
+  const t = useT()
+
+  return (
+    <div role="status" className="mt-14">
+      <p className="sr-only">{t.testimonials.loading}</p>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-hidden="true">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="rounded-xl border border-line bg-white p-7">
+            <div className="size-7 animate-pulse rounded-[6px] bg-[#e6e9ef] motion-reduce:animate-none" />
+            <div className="mt-4 h-3.5 w-11/12 animate-pulse rounded bg-[#e6e9ef] motion-reduce:animate-none" />
+            <div className="mt-2 h-3.5 w-4/5 animate-pulse rounded bg-[#e6e9ef] motion-reduce:animate-none" />
+            <div className="mt-6 flex items-center gap-3.5 border-t border-line/70 pt-5">
+              <div className="size-11 animate-pulse rounded-[10px] bg-[#e6e9ef] motion-reduce:animate-none" />
+              <div className="flex-1 space-y-2">
+                <div className="h-3 w-1/3 animate-pulse rounded bg-[#e6e9ef] motion-reduce:animate-none" />
+                <div className="h-2.5 w-1/2 animate-pulse rounded bg-[#e6e9ef] motion-reduce:animate-none" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 /**
- * Témoignages clients. Tant qu'aucun témoignage réel n'est publié dans
- * data/testimonials.ts, la section affiche son état d'attente — jamais
- * de témoignage inventé.
+ * Témoignages clients.
+ *
+ * Source des témoignages :
+ *   - `TESTIMONIALS_ENDPOINT` renseigné (lib/testimonials.ts) → liste distante
+ *     Google Sheets, déjà filtrée côté serveur (note >= 4, modération).
+ *   - Sinon → liste statique data/testimonials.ts ; le formulaire de
+ *     témoignage n'est affiché que lorsque l'endpoint est configuré.
+ * Une erreur de chargement distant retombe en silence sur la liste statique.
  */
 export default function TestimonialsSection() {
   const t = useT()
+  /* null = pas encore chargé (affiche le squelette). */
+  const [remote, setRemote] = useState<Testimonial[] | null>(null)
+
+  useEffect(() => {
+    if (!TESTIMONIALS_ENDPOINT) {
+      setRemote([])
+      return
+    }
+    let cancelled = false
+    fetchTestimonials().then((items) => {
+      if (!cancelled) setRemote(items)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const configured = TESTIMONIALS_ENDPOINT !== ''
+  const loading = configured && remote === null
+  const testimonials = remote && remote.length > 0 ? remote : TESTIMONIALS
 
   return (
     <section id="temoignages" className="py-20 lg:py-28" aria-labelledby="testimonials-title">
@@ -185,9 +239,13 @@ export default function TestimonialsSection() {
           subtitle={t.testimonials.subtitle}
         />
 
-        {TESTIMONIALS.length > 0 ? (
+        {loading ? (
           <Reveal delay={120}>
-            <Carousel />
+            <Skeleton />
+          </Reveal>
+        ) : testimonials.length > 0 ? (
+          <Reveal delay={120}>
+            <Carousel items={testimonials} />
           </Reveal>
         ) : (
           <Reveal delay={120} className="mt-14">
@@ -210,6 +268,14 @@ export default function TestimonialsSection() {
             </div>
           </Reveal>
         )}
+
+        {configured ? (
+          <Reveal delay={120} className="mt-16">
+            <div className="mx-auto max-w-3xl">
+              <TestimonialForm />
+            </div>
+          </Reveal>
+        ) : null}
       </div>
     </section>
   )

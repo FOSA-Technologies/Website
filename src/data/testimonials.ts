@@ -21,6 +21,8 @@ export interface Testimonial {
   company: string
   /** Photo du client (fournie par lui). Optionnelle : les initiales s'affichent à la place. */
   avatar?: string
+  /** Note du client (1–5). Présente uniquement sur les témoignages distants (Google Sheets). */
+  rating?: number
 }
 
 /**
