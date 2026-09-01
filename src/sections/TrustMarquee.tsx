@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Diamond } from '../components/SectionHeading'
 import { useT } from '../i18n/LanguageContext'
 import { TRUSTED_LOGOS } from '../data/trust'
@@ -33,8 +34,31 @@ function LogoGroup({ hidden = false }: { hidden?: boolean }) {
 
 export default function TrustMarquee() {
   const t = useT()
-  /* Durée d'un tour complet, adaptée au nombre de logos (très lent, jamais précipité). */
-  const loopSeconds = 10 + TRUSTED_LOGOS.length * 14
+  const maskRef = useRef<HTMLDivElement>(null)
+  /* Nombre de groupes rendus. La boucle anime -50% du track : il faut que le
+     track fasse ≥ 2× la fenêtre visible, sinon (peu de logos) les deux copies
+     tiennent à l'écran en même temps et la boucle laisse des trous. */
+  const [copies, setCopies] = useState(2)
+
+  useEffect(() => {
+    const mask = maskRef.current
+    if (!mask) return
+    const update = () => {
+      const group = mask.querySelector('ul')
+      const groupWidth = group?.offsetWidth ?? 0
+      if (groupWidth === 0) return
+      const needed = Math.max(2, 2 * Math.ceil(mask.clientWidth / groupWidth))
+      setCopies((prev) => (prev === needed ? prev : needed))
+    }
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(mask)
+    return () => observer.disconnect()
+  }, [])
+
+  /* Durée d'un tour complet, adaptée au nombre de logos (très lent, jamais précipité).
+     La boucle parcourt copies/2 groupes : durée étirée d'autant pour garder la même vitesse. */
+  const loopSeconds = (10 + TRUSTED_LOGOS.length * 14) * (copies / 2)
 
   return (
     <section className="border-y border-line bg-white py-10 sm:py-12" aria-labelledby="trust-title">
@@ -49,6 +73,7 @@ export default function TrustMarquee() {
         </p>
 
         <div
+          ref={maskRef}
           className="marquee marquee-mask mt-7 overflow-hidden"
           role="group"
           aria-label={`Logos de nos clients : ${TRUSTED_LOGOS.map((logo) => logo.name).join(', ')}`}
@@ -57,9 +82,11 @@ export default function TrustMarquee() {
             className="marquee-track flex w-max items-center"
             style={{ animationDuration: `${loopSeconds}s` }}
           >
-            {/* Le groupe dupliqué, masqué aux lecteurs d'écran, permet la boucle parfaite. */}
-            <LogoGroup />
-            <LogoGroup hidden />
+            {/* Groupes dupliqués pour la boucle parfaite — seul le premier est
+                exposé aux lecteurs d'écran. */}
+            {Array.from({ length: copies }, (_, i) => (
+              <LogoGroup key={i} hidden={i > 0} />
+            ))}
           </div>
         </div>
 

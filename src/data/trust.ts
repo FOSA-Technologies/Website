@@ -18,4 +18,6 @@ export interface TrustedLogo {
 
 export const TRUSTED_LOGOS: TrustedLogo[] = [
   { name: 'Green Impact', src: '/assets/green-impact.webp', width: 135, height: 128 },
+  { name: 'Paula', src: '/assets/paula.png', width: 7087, height: 3312 },
+  { name: 'SOA', src: '/assets/soa.png', width: 4724, height: 4724 },
 ]
