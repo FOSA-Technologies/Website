@@ -37,7 +37,7 @@ import type { Testimonial } from '../data/testimonials'
 /* Annotation string explicite : la valeur est destinée à être modifiée
    (une URL littérale casserait les comparaisons `!== ''` au type-check). */
 export const TESTIMONIALS_ENDPOINT: string =
-  'https://script.google.com/macros/s/AKfycbxEymUCVXUa7pt3xZF1bfEP5tLewnFzxl65WGogICQFetXlsAnJF6GX51ixdae6nAh_/exec'
+  'https://script.google.com/macros/s/AKfycbwCL0aE6s8Bf_BH_GfIj_nikr5CgRYagcd9sMLZnT0jhLyohjpBmA8ZvaICY6DzHA3S/exec'
 
 /** Clé localStorage : dernier e-mail ayant témoigné sur cet appareil. */
 const SUBMITTED_KEY = 'fosa-testimonial-email'
